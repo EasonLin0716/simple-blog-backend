@@ -1,5 +1,5 @@
-const blogController = require('../controllers/blogController')
+const postController = require('../controllers/postController')
 
 module.exports = app => {
-  app.get('/', blogController.getBlogs)
+  app.get('/', postController.getPosts)
 }
