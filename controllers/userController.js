@@ -31,9 +31,8 @@ const userController = {
         }
       }).then(user => {
         if (user) {
-          let errors = []
-          errors.push({ message: '使用者名稱或信箱重複' })
-          return res.render('signup', { errors, name, email })
+          req.flash('error_messages', '使用者名稱或信箱重複')
+          return res.redirect('/signup')
         } else {
           User.create({
             name,
