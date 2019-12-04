@@ -1,0 +1,26 @@
+.container #navbar {
+  height: 65px;
+}
+
+.container #navbar .col-left {
+  width: 211px;
+}
+
+#profile {
+  max-width: 728px;
+  padding: 0 24px;
+  margin: 0 auto;
+}
+
+#profile #intro {
+  margin-bottom: 30px;
+}
+
+#profile #category a {
+  margin-right: 20px;
+}
+
+#profile #avatar {
+  width: 128px;
+  height: 128px;
+}
