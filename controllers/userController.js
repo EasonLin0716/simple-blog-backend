@@ -1,5 +1,10 @@
+const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Post = db.Tweet
+const Reply = db.Reply
+const Followship = db.Followship
+const { Op } = (sequelize = require('sequelize'))
 
 const userController = {
   signInPage: (req, res) => {
@@ -12,7 +17,39 @@ const userController = {
     return res.render('signup')
   },
   signUp: (req, res) => {
-    return res.send('POST 註冊')
+    if (req.body.passwordCheck != req.body.password) {
+      req.flash('error_messages', '兩次密碼輸入不同')
+      return res.redirect('/signup')
+    } else {
+      const { name, email, password, passwordCheck } = req.body
+      if (!name || !email || !password || !passwordCheck) {
+        return req.flash('error_messages', '所有欄位皆為必填')
+      }
+      User.findOne({
+        where: {
+          [Op.or]: [{ email }, { name }]
+        }
+      }).then(user => {
+        if (user) {
+          let errors = []
+          errors.push({ message: '使用者名稱或信箱重複' })
+          return res.render('signup', { errors, name, email })
+        } else {
+          User.create({
+            name,
+            email,
+            password: bcrypt.hashSync(
+              req.body.password,
+              bcrypt.genSaltSync(10),
+              null
+            ),
+            avatar: 'https://fakeimg.pl/300x300/'
+          }).then(user => {
+            return res.redirect('/signin')
+          })
+        }
+      })
+    }
   },
 
   getUser: (req, res) => {
