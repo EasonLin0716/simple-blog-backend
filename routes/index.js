@@ -2,6 +2,22 @@ const postController = require('../controllers/postController')
 const replyController = require('../controllers/replyController')
 const userController = require('../controllers/userController')
 
+const authenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+  res.redirect('/signin')
+}
+const authenticatedAdmin = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    if (req.user.isAdmin) {
+      return next()
+    }
+    return res.redirect('/')
+  }
+  res.redirect('/signin')
+}
+
 module.exports = app => {
   app.get('/', (req, res) => {
     res.redirect('/posts')
@@ -17,7 +33,7 @@ module.exports = app => {
   /* POST相關 */
 
   app.get('/posts', postController.getPosts)
-  app.get('/posts/create', postController.createPost)
+  app.get('/posts/create', authenticated, postController.createPost)
   app.get('/posts/:id', postController.getPost)
   app.post('/posts', postController.addPost)
   app.get('/posts/:id/edit', postController.editPost)
