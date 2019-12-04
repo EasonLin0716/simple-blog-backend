@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
   )
   Bookmark.associate = function(models) {
     // associations can be defined here
-    Bookmark.belongsTo(model.Post)
-    Bookmark.belongsTo(model.User)
+    Bookmark.belongsTo(models.Post)
+    Bookmark.belongsTo(models.User)
   }
   return Bookmark
 }

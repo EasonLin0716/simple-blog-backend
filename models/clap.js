@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
   )
   Clap.associate = function(models) {
     // associations can be defined here
-    Clap.belongsTo(model.User)
-    Clap.belongsTo(model.Post)
+    Clap.belongsTo(models.User)
+    Clap.belongsTo(models.Post)
   }
   return Clap
 }

@@ -14,10 +14,10 @@ module.exports = (sequelize, DataTypes) => {
   )
   User.associate = function(models) {
     // associations can be defined here
-    User.hasMany(model.Post)
-    User.hasMany(model.Clap)
-    User.hasMany(model.Bookmark)
-    User.hasMany(model.Reply)
+    User.hasMany(models.Post)
+    User.hasMany(models.Clap)
+    User.hasMany(models.Bookmark)
+    User.hasMany(models.Reply)
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: 'followingId',

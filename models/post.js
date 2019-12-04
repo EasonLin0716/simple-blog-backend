@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
   )
   Post.associate = function(models) {
     // associations can be defined here
-    Post.belongsTo(model.User)
-    Post.hasMany(model.Bookmark)
-    Post.hasMany(model.Reply)
-    Post.hasMany(model.Clap)
+    Post.belongsTo(models.User)
+    Post.hasMany(models.Bookmark)
+    Post.hasMany(models.Reply)
+    Post.hasMany(models.Clap)
   }
   return Post
 }

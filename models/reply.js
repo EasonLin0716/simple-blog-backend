@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
   )
   Reply.associate = function(models) {
     // associations can be defined here
-    Reply.belongsTo(model.User)
-    Reply.belongsTo(model.Post)
+    Reply.belongsTo(models.User)
+    Reply.belongsTo(models.Post)
   }
   return Reply
 }
