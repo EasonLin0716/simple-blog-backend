@@ -22,11 +22,23 @@ const userController = {
   },
 
   editUser: (req, res) => {
-    return res.render('user/edit')
+    return User.findByPk(req.params.id).then(user => {
+      return res.render('user/edit', { user })
+    })
   },
 
   putUser: (req, res) => {
-    return res.send('PUT 更新個人資訊')
+    return User.findByPk(req.params.id).then(user => {
+      user
+        .update({
+          name: req.body.name,
+          introduction: req.body.introduction
+        })
+        .then(user => {
+          console.log(user)
+          res.redirect(`/users/${user.id}`)
+        })
+    })
   },
 
   addFollowing: (req, res) => {
