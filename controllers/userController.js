@@ -1,3 +1,6 @@
+const db = require('../models')
+const User = db.User
+
 const userController = {
   signInPage: (req, res) => {
     return res.render('signin')
@@ -13,7 +16,9 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    return res.render('user/profile')
+    return User.findByPk(req.params.id).then(user => {
+      return res.render('user/profile', { user })
+    })
   },
 
   editUser: (req, res) => {

@@ -1,1 +1,17 @@
-<h1>GET 瀏覽個人資訊</h1>
+<section id="profile">
+  <div class="row" id="intro">
+    <div class="col-left col-9">
+      <h2 class="d-inline">{{{user.name}}}</h2><a href="#">Edit Profile</a>
+      <p>{{{user.introduction}}}</p>
+      <span>Following</span> <span>Followers</span>
+    </div>
+    <div class="col-3"><img src="{{{user.avatar}}}" class="rounded-circle" id="avatar" alt="avatar">
+    </div>
+  </div>
+  <div class="d-flex" id="category">
+    <a href="#">Profile</a>
+    <a href="#">Claps</a>
+    <a href="#">Highlights</a>
+    <a href="#">Responses</a>
+  </div>
+</section>
