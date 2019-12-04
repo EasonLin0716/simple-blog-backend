@@ -11,6 +11,7 @@ const userController = {
     return res.render('signin')
   },
   signIn: (req, res) => {
+    req.flash('success_messages', '成功登入')
     return res.redirect('/posts')
   },
   signUpPage: (req, res) => {
