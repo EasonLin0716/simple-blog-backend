@@ -9,10 +9,10 @@ module.exports = app => {
 
   /* 註冊及登入 */
 
-  app.get('/signup', userController.signInPage)
-  app.post('/signup', userController.signIn)
-  app.get('/signin', userController.signUpPage)
-  app.post('/signin', userController.signUp)
+  app.get('/signin', userController.signInPage)
+  app.post('/signin', userController.signIn)
+  app.get('/signup', userController.signUpPage)
+  app.post('/signup', userController.signUp)
 
   /* POST相關 */
 
