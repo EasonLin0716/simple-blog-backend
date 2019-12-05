@@ -1,3 +1,9 @@
+const db = require('../models')
+const User = db.User
+const Post = db.Post
+const Reply = db.Reply
+const Followship = db.Followship
+
 const postController = {
   getPosts: (req, res) => {
     return res.render('post/posts')
@@ -8,7 +14,10 @@ const postController = {
   },
 
   getPost: (req, res) => {
-    return res.render('post/post')
+    return Post.findByPk(req.params.id).then(post => {
+      console.log(post)
+      return res.render('post/post', { post })
+    })
   },
 
   addPost: (req, res) => {

@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
-const Post = db.Tweet
+const Post = db.Post
 const Reply = db.Reply
 const Followship = db.Followship
 const { Op } = (sequelize = require('sequelize'))
