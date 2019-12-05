@@ -1,4 +1,6 @@
 const express = require('express')
+const sassMiddleware = require('node-sass-middleware')
+const path = require('path')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
@@ -17,6 +19,17 @@ app.use(
 )
 app.engine('handlebars', handlebars())
 app.set('view engine', 'handlebars')
+const srcPath = __dirname + '/scss'
+const destPath = __dirname + '/public'
+app.use(
+  sassMiddleware({
+    src: srcPath,
+    dest: destPath,
+    debug: true,
+    outputStyle: 'compressed'
+  }),
+  express.static(path.join(__dirname, 'public'))
+)
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
