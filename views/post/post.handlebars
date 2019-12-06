@@ -1,7 +1,25 @@
 <section id="post">
+  <h2>{{{post.title}}}</h2>
+  <div id="user">
+    <div id="info">
+      <div id="image">
+        <img src="{{{author.avatar}}}" class="rounded-circle" alt="avatar">
+      </div>
+      <div id="author">
+        <span>{{{author.name}}}</span> <button class="badge badge-success">follow</button>
+        <br />
+        {{{post.createdAt}}} 9 mins read
+      </div>
+    </div>
+    <div id="link">
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-linkedin"></i>
+      <i class="fab fa-facebook-square"></i>
+      <i class="far fa-bookmark"></i>
+    </div>
+  </div>
+  </div>
   <div id="content">
-    <h1>Get post</h1>
-    <h2>{{{post.title}}}</h2>
     <img src="{{{post.cover}}}" alt="cover">
     <p>{{{post.content}}}</p>
   </div>
