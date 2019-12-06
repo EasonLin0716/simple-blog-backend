@@ -14,9 +14,9 @@ const postController = {
   },
 
   getPost: (req, res) => {
-    return Post.findByPk(req.params.id).then(post => {
-      console.log(post)
-      return res.render('post/post', { post })
+    return Post.findByPk(req.params.id, { include: User }).then(post => {
+      const author = post.User
+      return res.render('post/post', { post, author })
     })
   },
 
