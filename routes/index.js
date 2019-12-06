@@ -1,6 +1,7 @@
 const postController = require('../controllers/postController')
 const replyController = require('../controllers/replyController')
 const userController = require('../controllers/userController')
+const passport = require('../config/passport')
 
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -26,7 +27,14 @@ module.exports = app => {
   /* 註冊及登入 */
 
   app.get('/signin', userController.signInPage)
-  app.post('/signin', userController.signIn)
+  app.post(
+    '/signin',
+    passport.authenticate('local', {
+      failureRedirect: '/signin',
+      failureFlash: true
+    }),
+    userController.signIn
+  )
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
 
