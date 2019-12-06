@@ -3,7 +3,7 @@ i {
 }
 input,
 button,
-submit {
+textarea {
   border: none;
 }
 
@@ -84,6 +84,18 @@ submit {
       width: 130px;
     }
   }
+}
+
+#create {
+  margin: 0 auto;
+  max-width: 740px;
+  padding: 0 20px;
+  #title {
+    width: 100%;
+    font-size: 64px;
+  }
   #content {
+    width: 100%;
+    font-size: 20px;
   }
 }

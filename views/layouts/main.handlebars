@@ -14,17 +14,20 @@
 
 <body>
   <div class="container">
-    <nav class="d-flex justify-content-between align-items-center" id="navbar">
-      <div class="col-left pl-4">
-        <a href="#"><img src="https://fakeimg.pl/112x22/" alt="logo"></a>
-      </div>
-      <div class="col-right d-flex justify-content-between align-items-center">
-        <i class="fas fa-search"></i>
-        <i class="far fa-bell"></i>
-        <button class="btn btn-default">Upgrade</button>
-        <a href="#"><img src="https://fakeimg.pl/32x32/" alt="profile"></a>
-      </div>
-    </nav>
+    {{#if draft}}
+    {{else}}
+      <nav class="d-flex justify-content-between align-items-center" id="navbar">
+        <div class="col-left pl-4">
+          <a href="#"><img src="https://fakeimg.pl/112x22/" alt="logo"></a>
+        </div>
+        <div class="col-right d-flex justify-content-between align-items-center">
+          <i class="fas fa-search"></i>
+          <i class="far fa-bell"></i>
+          <button class="btn btn-default">Upgrade</button>
+          <a href="#"><img src="https://fakeimg.pl/32x32/" alt="profile"></a>
+        </div>
+      </nav>
+    {{/if}}
   </div>
   {{#if success_messages}}
     <div class="alert alert-success" role="alert">{{success_messages}}</div>

@@ -72,7 +72,6 @@ const userController = {
           introduction: req.body.introduction
         })
         .then(user => {
-          console.log(user)
           res.redirect(`/users/${user.id}`)
         })
     })

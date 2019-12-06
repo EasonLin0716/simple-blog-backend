@@ -20,7 +20,9 @@
   </div>
   </div>
   <div id="content">
-    <img src="{{{post.cover}}}" alt="cover">
+    {{#if post.cover}}
+      <img src="{{{post.cover}}}" alt="cover">
+    {{/if}}
     <p>{{{post.content}}}</p>
   </div>
 </section>

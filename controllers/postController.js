@@ -11,7 +11,7 @@ const postController = {
   },
 
   createPost: (req, res) => {
-    return res.render('post/create')
+    return res.render('post/create', { draft: true })
   },
 
   getPost: (req, res) => {
@@ -23,7 +23,13 @@ const postController = {
   },
 
   addPost: (req, res) => {
-    return res.send('POST 新增一篇部落格')
+    return Post.create({
+      title: req.body.title,
+      content: req.body.content,
+      UserId: req.user.id
+    }).then(post => {
+      res.redirect(`/posts/${post.id}`)
+    })
   },
 
   editPost: (req, res) => {
