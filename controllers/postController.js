@@ -3,6 +3,7 @@ const User = db.User
 const Post = db.Post
 const Reply = db.Reply
 const Followship = db.Followship
+const helpers = require('../config/helpers')
 
 const postController = {
   getPosts: (req, res) => {
@@ -16,6 +17,7 @@ const postController = {
   getPost: (req, res) => {
     return Post.findByPk(req.params.id, { include: User }).then(post => {
       const author = post.User
+      post.monthDay = helpers.getMonthDay(String(post.createdAt))
       return res.render('post/post', { post, author })
     })
   },
