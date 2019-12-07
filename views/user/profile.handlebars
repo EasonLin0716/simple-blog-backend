@@ -14,4 +14,32 @@
     <a href="#">Highlights</a>
     <a href="#">Responses</a>
   </div>
+  <div id="posts">
+    <h3>Latest</h3>
+    {{#each posts}}
+      <div class="card">
+        <div id="info">
+          <div id="image">
+            <img src="{{{../user.avatar}}}" class="rounded-circle" alt="avatar">
+          </div>
+          <div id="author">
+            <span>{{{../user.name}}}</span>
+            <br />
+            {{{this.monthDay}}} 9 mins read
+          </div>
+        </div>
+        <div id="post">
+          <div id="image">
+            <img src="{{{this.cover}}}" alt="cover">
+          </div>
+          <h2>{{{this.title}}}</h2>
+          <p>{{{this.content}}}</p>
+        </div>
+        <div id="buttons">
+          <i class="far fa-hand-point-up"></i>
+          <i class="far fa-bookmark"></i>
+        </div>
+      </div>
+    {{/each}}
+  </div>
 </section>

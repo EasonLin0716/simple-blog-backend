@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs')
+const helpers = require('../config/helpers')
 const db = require('../models')
 const User = db.User
 const Post = db.Post
@@ -53,8 +54,12 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    return User.findByPk(req.params.id).then(user => {
-      return res.render('user/profile', { user })
+    return User.findByPk(req.params.id, { include: Post }).then(user => {
+      user.Posts.map(post => {
+        post.monthDay = helpers.getMonthDay(String(post.createdAt))
+      })
+      const posts = user.Posts
+      return res.render('user/profile', { user, posts })
     })
   },
 
