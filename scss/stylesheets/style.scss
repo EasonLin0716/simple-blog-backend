@@ -30,26 +30,32 @@ textarea {
   max-width: 728px;
   padding: 0 24px;
   margin: 0 auto;
-}
-
-#profile {
   #intro {
     margin-bottom: 30px;
+    #avatar {
+      width: 128px;
+      height: 128px;
+    }
   }
-}
-
-#profile {
   #category {
     a {
       margin-right: 20px;
     }
   }
-}
-
-#profile {
-  #avatar {
-    width: 128px;
-    height: 128px;
+  #posts {
+    .card {
+      #info {
+        display: flex;
+        #image img {
+          width: 48px;
+          height: 48px;
+        }
+      }
+      #buttons {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
   }
 }
 
