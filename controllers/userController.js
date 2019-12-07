@@ -83,11 +83,23 @@ const userController = {
   },
 
   addFollowing: (req, res) => {
-    return res.send('POST 新增一個追隨')
+    return Followship.create({
+      followerId: req.user.id,
+      followingId: +req.params.id
+    }).then(() => {
+      return res.redirect('back')
+    })
   },
 
   deleteFollowing: (req, res) => {
-    return res.send('DELETE 刪除一個追隨')
+    return Followship.destroy({
+      where: {
+        followerId: req.user.id,
+        followingId: +req.body.id
+      }
+    }).then(() => {
+      return res.redirect('back')
+    })
   },
 
   getFollowings: (req, res) => {
