@@ -1,7 +1,21 @@
 <section id="profile">
   <div class="row" id="intro">
     <div class="col-left col-9">
-      <h2 class="d-inline">{{{user.name}}}</h2><a href="#">Edit Profile</a>
+      <h2 class="d-inline">{{{user.name}}}</h2>
+      {{#ifEqual user.id currentUser.id}}
+        <a href="#">Edit Profile</a>
+      {{/ifEqual}}
+      {{#ifNotEqual user.id currentUser.id}}
+        {{#if user.isFollowing}}
+          <form action="/users/{{{user.id}}}/follow?_method=DELETE" method="POST">
+            <button type="submit">Following</button>
+          </form>
+        {{else}}
+          <form action="/users/{{{user.id}}}/follow" method="POST">
+            <button type="submit">Follow</button>
+          </form>
+        {{/if}}
+      {{/ifNotEqual}}
       <p>{{{user.introduction}}}</p>
       <span>Following</span> <span>Followers</span>
     </div>

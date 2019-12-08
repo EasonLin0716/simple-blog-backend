@@ -1,9 +1,23 @@
-// Tue Dec 03 2019 14:51:39 GMT+0800 (GMT+08:00)
 const helpers = {
   getMonthDay: formatTime => {
     const month = formatTime.slice(4, 7)
     const day = formatTime.slice(8, 10)
     return `${month} ${day}`
+  },
+  // for handlebars
+  ifEqual: function(a, b, options) {
+    if (a === b) {
+      return options.fn(this)
+    } else {
+      return options.inverse(this)
+    }
+  },
+  ifNotEqual: function(a, b, options) {
+    if (a !== b) {
+      return options.fn(this)
+    } else {
+      return options.inverse(this)
+    }
   }
 }
 

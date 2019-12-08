@@ -54,12 +54,22 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    return User.findByPk(req.params.id, { include: Post }).then(user => {
+    return User.findByPk(req.params.id, {
+      include: [Post, { model: User, as: 'Followers' }]
+    }).then(user => {
       user.Posts.map(post => {
         post.monthDay = helpers.getMonthDay(String(post.createdAt))
       })
-      const posts = user.Posts
-      return res.render('user/profile', { user, posts })
+      if (req.user) {
+        user.isFollowing = user.Followers.map(user => user.id).includes(
+          req.user.id
+        )
+      }
+      return res.render('user/profile', {
+        user,
+        posts: user.Posts,
+        currentUser: req.user
+      })
     })
   },
 
@@ -95,7 +105,7 @@ const userController = {
     return Followship.destroy({
       where: {
         followerId: req.user.id,
-        followingId: +req.body.id
+        followingId: +req.params.id
       }
     }).then(() => {
       return res.redirect('back')
