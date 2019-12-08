@@ -58,7 +58,9 @@ module.exports = app => {
 
   app.get('/users/:id', userController.getUser)
   app.get('/users/:id/edit', userController.editUser)
-  app.put('/users/:id', userController.putUser)
+  app.get('/users/:id/claps', userController.getClaps)
+  app.get('/users/:id/highlights', userController.getHighlights)
+  app.get('/users/:id/responses', userController.getResponses)
   app.post('/users/:id/follow', authenticated, userController.addFollowing)
   app.delete('/users/:id/follow', authenticated, userController.deleteFollowing)
   app.get('/users/:id/followers', userController.getFollowers)

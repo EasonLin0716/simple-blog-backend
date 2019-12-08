@@ -73,6 +73,18 @@ const userController = {
     })
   },
 
+  getClaps: (req, res) => {
+    return res.render('user/claps')
+  },
+
+  getHighlights: (req, res) => {
+    return res.render('user/highlights')
+  },
+
+  getResponses: (req, res) => {
+    return res.render('user/responses')
+  },
+
   editUser: (req, res) => {
     return User.findByPk(req.params.id).then(user => {
       return res.render('user/edit', { user })
