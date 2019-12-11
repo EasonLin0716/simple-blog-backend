@@ -85,11 +85,18 @@ const userController = {
   getClaps: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
-        { model: Post, include: Clap },
+        { model: Clap, include: { model: Post, include: Clap } },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
     }).then(user => {
+      user.clappedPost = user.Claps.map(clap => clap.Post)
+      for (let i = 0; i < user.clappedPost.length; i++) {
+        user.clappedPost[i].clappedTime = 0
+        user.clappedPost[i].Claps.map(postClap => {
+          user.clappedPost[i].clappedTime += postClap.clap
+        })
+      }
       return res.render('user/claps', { user, currentUser: req.user })
     })
   },
