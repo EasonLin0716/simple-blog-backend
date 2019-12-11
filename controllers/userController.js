@@ -55,10 +55,15 @@ const userController = {
 
   getUser: (req, res) => {
     return User.findByPk(req.params.id, {
-      include: [Post, { model: User, as: 'Followers' }]
+      include: [
+        Post,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
     }).then(user => {
       user.Posts.map(post => {
         post.monthDay = helpers.getMonthDay(String(post.createdAt))
+        post.readTime = helpers.getReadTime(post.content)
       })
       if (req.user) {
         user.isFollowing = user.Followers.map(user => user.id).includes(

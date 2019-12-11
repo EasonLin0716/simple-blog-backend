@@ -7,17 +7,18 @@
       {{/ifEqual}}
       {{#ifNotEqual user.id currentUser.id}}
         {{#if user.isFollowing}}
-          <form action="/users/{{{user.id}}}/follow?_method=DELETE" method="POST">
-            <button type="submit">Following</button>
+          <form action="/users/{{{user.id}}}/follow?_method=DELETE" method="POST" class="d-inline">
+            <button type="submit" class="badge badge-success">Following</button>
           </form>
         {{else}}
-          <form action="/users/{{{user.id}}}/follow" method="POST">
-            <button type="submit">Follow</button>
+          <form action="/users/{{{user.id}}}/follow" method="POST" class="d-inline">
+            <button type="submit" class="badge badge-info">Follow</button>
           </form>
         {{/if}}
       {{/ifNotEqual}}
       <p>{{{user.introduction}}}</p>
-      <span>Following</span> <span>Followers</span>
+      <span>{{{user.Followings.length}}} Following</span>
+      <span>{{{user.Followers.length}}} Followers</span>
     </div>
     <div class="col-3"><img src="{{{user.avatar}}}" class="rounded-circle" id="avatar" alt="avatar">
     </div>
@@ -39,7 +40,7 @@
           <div id="author">
             <span>{{{../user.name}}}</span>
             <br />
-            {{{this.monthDay}}} 9 mins read
+            {{{this.monthDay}}} {{{this.readTime}}}
           </div>
         </div>
         <div id="post">
