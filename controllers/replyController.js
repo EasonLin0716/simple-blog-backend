@@ -1,6 +1,30 @@
+const db = require('../models')
+const Post = db.Post
+const Clap = db.Clap
+
 const replyController = {
   clap: (req, res) => {
-    return res.send('POST 新增一次鼓掌')
+    return Clap.findOne({
+      where: { UserId: req.user.id, PostId: +req.params.id }
+    }).then(clap => {
+      if (clap) {
+        clap
+          .update({
+            clap: +(clap.clap + 1)
+          })
+          .then(() => {
+            res.redirect('back')
+          })
+      } else {
+        Clap.create({
+          clap: 1,
+          UserId: req.user.id,
+          PostId: req.params.id
+        }).then(() => {
+          res.redirect('back')
+        })
+      }
+    })
   },
 
   unClap: (req, res) => {

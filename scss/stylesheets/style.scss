@@ -1,10 +1,27 @@
 i {
-  font-size: 19px;
+  font-size: 25px;
 }
-input,
+.icon {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+}
+.icon-clap {
+  background-image: url(../icons/clap.svg);
+}
+.icon-clapped {
+  background-image: url(../icons/clap-hands.svg);
+}
 button,
-textarea {
+input[type='submit'],
+input[type='reset'] {
+  background: none;
+  color: inherit;
   border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
 
 .alert-success,

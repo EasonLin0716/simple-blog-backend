@@ -51,7 +51,20 @@
           <p>{{{this.content}}}</p>
         </div>
         <div id="buttons">
-          <i class="far fa-hand-point-up"></i>
+          {{#if this.Claps.length}}
+            <form action="/posts/{{{this.id}}}/clap" method="POST">
+              <button type="submit">
+                <i class="icon icon-clapped"></i>
+              </button>
+              {{{this.clappedTime}}}
+            </form>
+          {{else}}
+            <form action="/posts/{{{this.id}}}/clap" method="POST">
+              <button type="submit">
+                <i class="icon icon-clap"></i>
+              </button>
+            </form>
+          {{/if}}
           <i class="far fa-bookmark"></i>
         </div>
       </div>

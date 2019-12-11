@@ -4,6 +4,7 @@ const db = require('../models')
 const User = db.User
 const Post = db.Post
 const Reply = db.Reply
+const Clap = db.Clap
 const Followship = db.Followship
 const { Op } = (sequelize = require('sequelize'))
 
@@ -56,7 +57,7 @@ const userController = {
   getUser: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
-        Post,
+        { model: Post, include: Clap },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
@@ -64,6 +65,9 @@ const userController = {
       user.Posts.map(post => {
         post.monthDay = helpers.getMonthDay(String(post.createdAt))
         post.readTime = helpers.getReadTime(post.content)
+        post.clappedTime = post.Claps.map(d => d.clap).length
+          ? post.Claps.map(d => d.clap).reduce((a, b) => a + b)
+          : 0
       })
       if (req.user) {
         user.isFollowing = user.Followers.map(user => user.id).includes(
