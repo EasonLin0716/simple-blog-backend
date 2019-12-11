@@ -4,6 +4,10 @@ const helpers = {
     const day = formatTime.slice(8, 10)
     return `${month} ${day}`
   },
+  getReadTime: content => {
+    const readTime = Math.ceil(content.length / 400)
+    return readTime === 1 ? `1 min read` : `${readTime} mins read`
+  },
   // for handlebars
   ifEqual: function(a, b, options) {
     if (a === b) {
