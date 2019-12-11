@@ -83,15 +83,39 @@ const userController = {
   },
 
   getClaps: (req, res) => {
-    return res.render('user/claps')
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Post, include: Clap },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    }).then(user => {
+      return res.render('user/claps', { user, currentUser: req.user })
+    })
   },
 
   getHighlights: (req, res) => {
-    return res.render('user/highlights')
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Post, include: Clap },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    }).then(user => {
+      return res.render('user/highlights', { user, currentUser: req.user })
+    })
   },
 
   getResponses: (req, res) => {
-    return res.render('user/responses')
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Post, include: Clap },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    }).then(user => {
+      return res.render('user/responses', { user, currentUser: req.user })
+    })
   },
 
   editUser: (req, res) => {

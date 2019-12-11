@@ -43,7 +43,10 @@ input[type='reset'] {
   }
 }
 
-#profile {
+#profile,
+#claps,
+#responses,
+#highlights {
   max-width: 728px;
   padding: 0 24px;
   margin: 0 auto;

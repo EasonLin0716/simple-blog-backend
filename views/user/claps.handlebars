@@ -1,1 +1,32 @@
-<h1>Get claps</h1>
+<section id="claps">
+  <div class="row" id="intro">
+    <div class="col-left col-9">
+      <h2 class="d-inline">{{{user.name}}}</h2>
+      {{#ifEqual user.id currentUser.id}}
+        <a href="#">Edit Profile</a>
+      {{/ifEqual}}
+      {{#ifNotEqual user.id currentUser.id}}
+        {{#if user.isFollowing}}
+          <form action="/users/{{{user.id}}}/follow?_method=DELETE" method="POST" class="d-inline">
+            <button type="submit" class="badge badge-success">Following</button>
+          </form>
+        {{else}}
+          <form action="/users/{{{user.id}}}/follow" method="POST" class="d-inline">
+            <button type="submit" class="badge badge-info">Follow</button>
+          </form>
+        {{/if}}
+      {{/ifNotEqual}}
+      <p>{{{user.introduction}}}</p>
+      <span>{{{user.Followings.length}}} Following</span>
+      <span>{{{user.Followers.length}}} Followers</span>
+    </div>
+    <div class="col-3"><img src="{{{user.avatar}}}" class="rounded-circle" id="avatar" alt="avatar">
+    </div>
+  </div>
+  <div class="d-flex" id="category">
+    <a href="/users/{{{user.id}}}">Profile</a>
+    <a href="/users/{{{user.id}}}/claps">Claps</a>
+    <a href="/users/{{{user.id}}}/highlights">Highlights</a>
+    <a href="/users/{{{user.id}}}/responses">Responses</a>
+  </div>
+</section>
