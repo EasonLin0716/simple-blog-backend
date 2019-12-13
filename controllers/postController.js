@@ -33,11 +33,22 @@ const postController = {
   },
 
   editPost: (req, res) => {
-    return res.render('post/edit')
+    return Post.findByPk(req.params.id).then(post => {
+      return res.render('post/edit', { post })
+    })
   },
 
   putPost: (req, res) => {
-    return res.send('PUT 更新一則部落格')
+    return Post.findByPk(req.params.id).then(post => {
+      return post
+        .update({
+          title: req.body.title,
+          content: req.body.content
+        })
+        .then(post => {
+          return res.redirect(`/posts/${post.id}`)
+        })
+    })
   },
 
   deletePost: (req, res) => {
