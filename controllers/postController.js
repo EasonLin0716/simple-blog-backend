@@ -2,13 +2,15 @@ const db = require('../models')
 const User = db.User
 const Post = db.Post
 const Reply = db.Reply
-const Followship = db.Followship
 const Clap = db.Clap
 const helpers = require('../config/helpers')
+const postService = require('../services/postService')
 
 const postController = {
   getPosts: (req, res) => {
-    return res.render('post/posts')
+    postService.getPosts(req, res, data => {
+      return res.render('post/posts', data)
+    })
   },
 
   createPost: (req, res) => {
