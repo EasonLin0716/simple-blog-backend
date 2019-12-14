@@ -3,6 +3,7 @@ const User = db.User
 const Post = db.Post
 const Reply = db.Reply
 const Followship = db.Followship
+const Clap = db.Clap
 const helpers = require('../config/helpers')
 
 const postController = {
@@ -15,7 +16,21 @@ const postController = {
   },
 
   getPost: (req, res) => {
-    return Post.findByPk(req.params.id, { include: User }).then(post => {
+    return Post.findByPk(req.params.id, {
+      include: [User, { model: Clap, include: User }]
+    }).then(post => {
+      const clappedUsers = post.Claps.map(d => d.User.name)
+      if (clappedUsers.length === 1) {
+        post.applauseFrom = `Applause from ${clappedUsers[0]}`
+      } else if (clappedUsers.length === 2) {
+        post.applauseFrom = `Applause from ${clappedUsers[0]} and ${clappedUsers[1]}`
+      } else if (clappedUsers.length > 2) {
+        post.applauseFrom = `Applause from ${clappedUsers[0]}, ${
+          clappedUsers[1]
+        } and ${clappedUsers.length - 2} others`
+      }
+
+      post.clappedTimes = post.Claps.map(d => d.clap).reduce((a, b) => a + b)
       const author = post.User
       post.monthDay = helpers.getMonthDay(String(post.createdAt))
       return res.render('post/post', { post, author })

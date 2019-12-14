@@ -13,7 +13,6 @@
     </div>
     <div id="link">
       <i class="fab fa-twitter"></i>
-      <i class="fab fa-linkedin"></i>
       <i class="fab fa-facebook-square"></i>
       <i class="far fa-bookmark"></i>
     </div>
@@ -25,4 +24,33 @@
     {{/if}}
     <p>{{{post.content}}}</p>
   </div>
+  <div id="buttons">
+    <div id="clap">
+      <div>
+        <i class="icon icon-clap"></i>
+      </div>
+      <div id="clap-msg">
+        {{{post.clappedTimes}}} claps <br />
+        {{#if post.applauseFrom}}
+          {{{post.applauseFrom}}}
+        {{/if}}
+      </div>
+    </div>
+    <div id="links">
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-facebook-square"></i>
+      <i class="far fa-bookmark"></i>
+      <i class="fas fa-ellipsis-h"></i>
+    </div>
+  </div>
+  <hr>
+  <div id="written-by">
+    <img src="{{{author.avatar}}}" alt="">
+    WRITTEN BY
+    {{{author.name}}}
+    {{{author.introduction}}}
+    <button class="badge badge-success">follow</button>
+  </div>
+  <hr>
+  <a href="#" class="btn btn-success">Write the first response</a>
 </section>

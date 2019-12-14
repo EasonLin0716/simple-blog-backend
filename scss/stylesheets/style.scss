@@ -110,6 +110,18 @@ input[type='reset'] {
       width: 130px;
     }
   }
+  #content {
+    width: 100%;
+    font-size: 20px;
+    margin-bottom: 40px;
+  }
+  #buttons {
+    display: flex;
+    justify-content: space-between;
+    #clap {
+      display: flex;
+    }
+  }
 }
 
 #create {
@@ -119,9 +131,5 @@ input[type='reset'] {
   #title {
     width: 100%;
     font-size: 64px;
-  }
-  #content {
-    width: 100%;
-    font-size: 20px;
   }
 }
