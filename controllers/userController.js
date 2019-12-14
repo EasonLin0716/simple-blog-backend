@@ -65,6 +65,7 @@ const userController = {
       user.Posts.map(post => {
         post.monthDay = helpers.getMonthDay(String(post.createdAt))
         post.readTime = helpers.getReadTime(post.content)
+        post.content = post.content.substring(0, 50) + `...`
         post.clappedTime = post.Claps.map(d => d.clap).length
           ? post.Claps.map(d => d.clap).reduce((a, b) => a + b)
           : 0
@@ -92,10 +93,14 @@ const userController = {
     }).then(user => {
       user.clappedPost = user.Claps.map(clap => clap.Post)
       for (let i = 0; i < user.clappedPost.length; i++) {
-        user.clappedPost[i].clappedTime = 0
-        user.clappedPost[i].Claps.map(postClap => {
-          user.clappedPost[i].clappedTime += postClap.clap
+        const post = user.clappedPost[i]
+        post.clappedTime = 0
+        post.Claps.map(postClap => {
+          post.clappedTime += postClap.clap
         })
+        post.readTime = helpers.getReadTime(post.content)
+        post.monthDay = helpers.getMonthDay(String(post.createdAt))
+        post.content = post.content.substring(0, 50) + `...`
       }
       return res.render('user/claps', { user, currentUser: req.user })
     })
