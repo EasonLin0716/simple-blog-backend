@@ -6,9 +6,18 @@
         <img src="{{{author.avatar}}}" class="rounded-circle" alt="avatar">
       </div>
       <div id="author">
-        <span>{{{author.name}}}</span> <button class="badge badge-success">follow</button>
+        <span>{{{author.name}}}</span>
+        {{#if author.isFollowedByCurrentUser}}
+          <form action="/users/{{{author.id}}}/follow?_method=DELETE" method="POST" class="d-inline">
+            <button type="submit" class="badge badge-success">following</button>
+          </form>
+        {{else}}
+          <form action="/users/{{{author.id}}}/follow" method="POST" class="d-inline">
+            <button type="submit" class="badge badge-success">follow</button>
+          </form>
+        {{/if}}
         <br />
-        {{{post.monthDay}}} 9 mins read
+        {{{post.monthDay}}} {{{post.readTime}}}
       </div>
     </div>
     <div id="link">
@@ -26,7 +35,7 @@
   </div>
   <div id="buttons">
     <div id="clap">
-      <div>
+      <div id="clap-box">
         <i class="icon icon-clap"></i>
       </div>
       <div id="clap-msg">
@@ -45,12 +54,29 @@
   </div>
   <hr>
   <div id="written-by">
-    <img src="{{{author.avatar}}}" alt="">
-    WRITTEN BY
-    {{{author.name}}}
-    {{{author.introduction}}}
-    <button class="badge badge-success">follow</button>
+    <div id="author-info">
+      <div id="image">
+        <img src="{{{author.avatar}}}" alt="">
+      </div>
+      <div id="author">
+        WRITTEN BY
+        <h4>{{{author.name}}}</h4>
+        <p>{{{author.introduction}}}</p>
+      </div>
+    </div>
+    <div id="follow-btn">
+      {{#if author.isFollowedByCurrentUser}}
+        <form action="/users/{{{author.id}}}/follow?_method=DELETE" method="POST">
+          <button type="submit" class="badge badge-success">following</button>
+        </form>
+      {{else}}
+        <form action="/users/{{{author.id}}}/follow" method="POST">
+          <button type="submit" class="badge badge-success">follow</button>
+        </form>
+      {{/if}}
+    </div>
   </div>
   <hr>
-  <a href="#" class="btn btn-success">Write the first response</a>
+  <a href="#" class="btn btn-block btn-success py-4">Write the first response</a>
+  <hr>
 </section>

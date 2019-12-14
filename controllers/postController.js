@@ -17,7 +17,10 @@ const postController = {
 
   getPost: (req, res) => {
     return Post.findByPk(req.params.id, {
-      include: [User, { model: Clap, include: User }]
+      include: [
+        { model: User, include: [{ model: User, as: 'Followers' }] },
+        { model: Clap, include: User }
+      ]
     }).then(post => {
       const clappedUsers = post.Claps.map(d => d.User.name)
       if (clappedUsers.length === 1) {
@@ -29,10 +32,18 @@ const postController = {
           clappedUsers[1]
         } and ${clappedUsers.length - 2} others`
       }
-
-      post.clappedTimes = post.Claps.map(d => d.clap).reduce((a, b) => a + b)
-      const author = post.User
+      if (post.Claps.length) {
+        post.clappedTimes = post.Claps.map(d => d.clap).reduce((a, b) => a + b)
+      }
       post.monthDay = helpers.getMonthDay(String(post.createdAt))
+      post.readTime = helpers.getReadTime(post.content)
+
+      const author = post.User
+      if (req.user) {
+        author.isFollowedByCurrentUser = post.User.Followers.map(
+          d => d.id
+        ).includes(+req.user.id)
+      }
       return res.render('post/post', { post, author })
     })
   },

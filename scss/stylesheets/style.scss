@@ -120,6 +120,29 @@ input[type='reset'] {
     justify-content: space-between;
     #clap {
       display: flex;
+      #clap-box {
+        width: 58px;
+        height: 58px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid;
+        border-radius: 50%;
+      }
+    }
+  }
+  #written-by {
+    display: flex;
+    justify-content: space-between;
+    #author-info {
+      display: flex;
+      #image {
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+        }
+      }
     }
   }
 }
