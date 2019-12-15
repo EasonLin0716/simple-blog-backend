@@ -5,6 +5,11 @@ const postController = {
     postService.getPosts(req, res, data => {
       return res.json(data)
     })
+  },
+  getPost: (req, res) => {
+    postService.getPost(req, res, data => {
+      return res.json(data)
+    })
   }
 }
 

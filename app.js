@@ -9,10 +9,13 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const app = express()
 const port = 3000
+const cors = require('cors')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+
+app.use(cors())
 
 app.use(
   session({ secret: 'secret', resave: 'false', saveUninitialized: 'false' })

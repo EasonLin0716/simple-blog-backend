@@ -9,6 +9,38 @@ const postService = {
   getPosts: async (req, res, callback) => {
     const posts = await Post.findAll()
     return callback({ posts })
+  },
+
+  getPost: async (req, res, callback) => {
+    const post = await Post.findByPk(req.params.id, {
+      include: [
+        { model: User, include: [{ model: User, as: 'Followers' }] },
+        { model: Clap, include: User }
+      ]
+    })
+    const clappedUsers = post.Claps.map(d => d.User.name)
+    if (clappedUsers.length === 1) {
+      post.applauseFrom = `Applause from ${clappedUsers[0]}`
+    } else if (clappedUsers.length === 2) {
+      post.applauseFrom = `Applause from ${clappedUsers[0]} and ${clappedUsers[1]}`
+    } else if (clappedUsers.length > 2) {
+      post.applauseFrom = `Applause from ${clappedUsers[0]}, ${
+        clappedUsers[1]
+      } and ${clappedUsers.length - 2} others`
+    }
+    if (post.Claps.length) {
+      post.clappedTimes = post.Claps.map(d => d.clap).reduce((a, b) => a + b)
+    }
+    post.monthDay = helpers.getMonthDay(String(post.createdAt))
+    post.readTime = helpers.getReadTime(post.content)
+
+    const author = post.User
+    if (req.user) {
+      author.isFollowedByCurrentUser = post.User.Followers.map(
+        d => d.id
+      ).includes(+req.user.id)
+    }
+    return callback({ post, author })
   }
 }
 
