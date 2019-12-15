@@ -1,4 +1,7 @@
-<h1>Reply</h1>
+<h1>Post id: {{{post.id}}} Reply</h1>
+<p>clap times: {{{post.clapTimes}}}</p>
+<p>reply times: {{{replies.length}}}</p>
+<hr>
 {{#each replies}}
   <h3>name: {{{this.User.name}}}</h3>
   <h1>{{{this.title}}}</h1>
