@@ -6,7 +6,6 @@ module.exports = {
       'Replies',
       Array.from({ length: 24 }).map((item, index) => ({
         id: index + 1,
-        title: faker.lorem.words(),
         content: faker.lorem.sentences(),
         postId: Math.floor(Math.random() * 12) + 1,
         userId: (index % 3) + 1,

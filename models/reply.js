@@ -3,7 +3,6 @@ module.exports = (sequelize, DataTypes) => {
   const Reply = sequelize.define(
     'Reply',
     {
-      title: DataTypes.STRING,
       content: DataTypes.TEXT,
       PostId: DataTypes.INTEGER,
       UserId: DataTypes.INTEGER
