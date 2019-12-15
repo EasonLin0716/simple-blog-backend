@@ -1,4 +1,5 @@
 const postService = require('../../services/postService')
+const replyService = require('../../services/replyService')
 
 const postController = {
   getPosts: (req, res) => {

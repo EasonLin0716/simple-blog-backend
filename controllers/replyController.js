@@ -1,8 +1,14 @@
 const db = require('../models')
 const Post = db.Post
 const Clap = db.Clap
+const replyService = require('../services/replyService')
 
 const replyController = {
+  getReplies: (req, res) => {
+    replyService.getReplies(req, res, data => {
+      return res.render('post/reply', data)
+    })
+  },
   clap: (req, res) => {
     return Clap.findOne({
       where: { UserId: req.user.id, PostId: +req.params.id }
