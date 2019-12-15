@@ -23,8 +23,16 @@ const replyService = {
           ? postResult.dataValues.Claps.map(d => d.clap).reduce((a, b) => a + b)
           : 0
     }
-
     return callback({ replies, post })
+  },
+
+  postReply: async (req, res, callback) => {
+    const reply = await Reply.create({
+      content: req.body.content,
+      UserId: req.user.id,
+      PostId: req.params.id
+    })
+    return callback({ status: 'success', message: '', PostId: reply.PostId })
   }
 }
 module.exports = replyService

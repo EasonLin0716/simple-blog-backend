@@ -1,3 +1,7 @@
+<form action="/posts/{{{post.id}}}/reply" method="POST">
+  <textarea class="form-control" placeholder="reply..." name="content" id="content" cols="30" rows="10"></textarea>
+  <button type="submit" class="btn btn-success">Reply</button>
+</form>
 <h1>Post id: {{{post.id}}} Reply</h1>
 <p>clap times: {{{post.clapTimes}}}</p>
 <p>reply times: {{{replies.length}}}</p>

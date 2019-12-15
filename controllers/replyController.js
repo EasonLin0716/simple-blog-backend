@@ -9,6 +9,12 @@ const replyController = {
       return res.render('post/reply', data)
     })
   },
+  postReply: (req, res) => {
+    replyService.postReply(req, res, data => {
+      return res.redirect(`/posts/${data['PostId']}/replies`)
+    })
+  },
+
   clap: (req, res) => {
     return Clap.findOne({
       where: { UserId: req.user.id, PostId: +req.params.id }
@@ -35,10 +41,6 @@ const replyController = {
 
   unClap: (req, res) => {
     return res.send('POST 撤回一次鼓掌')
-  },
-
-  addReply: (req, res) => {
-    return res.send('POST 新增一則回覆')
   },
 
   deleteReply: (req, res) => {

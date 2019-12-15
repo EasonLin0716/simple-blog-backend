@@ -41,6 +41,7 @@ app.use(
 )
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 app.use(methodOverride('_method'))
 app.use(flash())
 app.use(passport.initialize())
