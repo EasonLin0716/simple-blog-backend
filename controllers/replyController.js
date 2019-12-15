@@ -14,6 +14,11 @@ const replyController = {
       return res.redirect(`/posts/${data['PostId']}/replies`)
     })
   },
+  deleteReply: (req, res) => {
+    replyService.deleteReply(req, res, data => {
+      return res.redirect(`/posts/${data['PostId']}/replies`)
+    })
+  },
 
   clap: (req, res) => {
     return Clap.findOne({
@@ -41,10 +46,6 @@ const replyController = {
 
   unClap: (req, res) => {
     return res.send('POST 撤回一次鼓掌')
-  },
-
-  deleteReply: (req, res) => {
-    return res.send('DELETE 刪除一則回覆')
   },
 
   addBookmark: (req, res) => {

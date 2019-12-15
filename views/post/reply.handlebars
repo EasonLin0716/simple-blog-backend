@@ -7,7 +7,12 @@
 <p>reply times: {{{replies.length}}}</p>
 <hr>
 {{#each replies}}
-  <h3>name: {{{this.User.name}}}</h3>
+  <h3>name: {{{this.User.name}}} reply id: {{{this.id}}}</h3>
+  {{#ifEqual ../currentUser.id ../post.postUserId}}
+    <form action="/posts/{{{../post.id}}}/replies/{{{this.id}}}?_method=DELETE" method="POST">
+      <button type="submit" class="btn btn-danger">DELETE IT</button>
+    </form>
+  {{/ifEqual}}
   <h1>{{{this.title}}}</h1>
   <h2>{{{this.content}}}</h2>
 {{/each}}

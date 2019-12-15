@@ -13,17 +13,19 @@ const replyService = {
     })
     const postResult = await Post.findOne({
       where: { id: +req.params.id },
-      include: Clap
+      include: [Clap, User]
     })
 
     const post = {
       ...postResult.dataValues,
+      postUserId: postResult.dataValues.User.id,
       clapTimes:
         postResult.dataValues.Claps.length > 0
           ? postResult.dataValues.Claps.map(d => d.clap).reduce((a, b) => a + b)
           : 0
     }
-    return callback({ replies, post })
+    const currentUser = req.user
+    return callback({ replies, post, currentUser })
   },
 
   postReply: async (req, res, callback) => {
@@ -33,6 +35,12 @@ const replyService = {
       PostId: req.params.id
     })
     return callback({ status: 'success', message: '', PostId: reply.PostId })
+  },
+
+  deleteReply: async (req, res, callback) => {
+    const reply = await Reply.findByPk(req.params.reply_id)
+    await reply.destroy()
+    return callback({ status: 'success', message: '', PostId: req.params.id })
   }
 }
 module.exports = replyService

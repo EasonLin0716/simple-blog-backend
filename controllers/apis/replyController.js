@@ -10,6 +10,11 @@ const replyController = {
     replyService.postReply(req, res, data => {
       return res.json(data)
     })
+  },
+  deleteReply: (req, res) => {
+    replyService.deleteReply(req, res, data => {
+      return res.json(data)
+    })
   }
 }
 
