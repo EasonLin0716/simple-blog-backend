@@ -24,12 +24,8 @@ const postController = {
   },
 
   addPost: (req, res) => {
-    return Post.create({
-      title: req.body.title,
-      content: req.body.content,
-      UserId: req.user.id
-    }).then(post => {
-      res.redirect(`/posts/${post.id}`)
+    postService.addPost(req, res, data => {
+      return res.redirect(`/posts/${data.PostId}`)
     })
   },
 
@@ -40,20 +36,15 @@ const postController = {
   },
 
   putPost: (req, res) => {
-    return Post.findByPk(req.params.id).then(post => {
-      return post
-        .update({
-          title: req.body.title,
-          content: req.body.content
-        })
-        .then(post => {
-          return res.redirect(`/posts/${post.id}`)
-        })
+    postService.putPost(req, res, data => {
+      return res.redirect(`/posts/${data.PostId}`)
     })
   },
 
   deletePost: (req, res) => {
-    return res.send('DELETE 刪除一則部落格')
+    postService.deletePost(req, res, data => {
+      return res.redirect(`/users/${data.UserId}`)
+    })
   }
 }
 

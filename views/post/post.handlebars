@@ -1,5 +1,8 @@
 <section id="post">
   <h2>{{{post.title}}}</h2>
+  <form action="/posts/{{{post.id}}}?_method=DELETE" method="POST">
+    <button type="submit" class="btn btn-danger">DELETE THIS POST</button>
+  </form>
   <div id="user">
     <div id="info">
       <div id="image">

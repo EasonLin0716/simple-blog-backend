@@ -41,6 +41,46 @@ const postService = {
       ).includes(+req.user.id)
     }
     return callback({ post, author })
+  },
+
+  addPost: async (req, res, callback) => {
+    const post = await Post.create({
+      title: req.body.title,
+      content: req.body.content,
+      UserId: req.user.id
+    })
+    return callback({
+      status: 'success',
+      message: '',
+      PostId: post.id
+    })
+  },
+
+  putPost: async (req, res, callback) => {
+    const post = await Post.findByPk(req.params.id)
+    await post.update({
+      title: req.body.title,
+      content: req.body.content
+    })
+    return callback({
+      status: 'success',
+      message: '',
+      PostId: post.id
+    })
+  },
+
+  deletePost: async (req, res, callback) => {
+    await Post.destroy({
+      where: {
+        id: req.params.id,
+        UserId: req.user.id
+      }
+    })
+    return callback({
+      status: 'success',
+      message: '',
+      UserId: req.user.id
+    })
   }
 }
 

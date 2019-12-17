@@ -11,6 +11,21 @@ const postController = {
     postService.getPost(req, res, data => {
       return res.json(data)
     })
+  },
+  addPost: (req, res) => {
+    postService.addPost(req, res, data => {
+      return res.json(data)
+    })
+  },
+  putPost: (req, res) => {
+    postService.putPost(req, res, data => {
+      return res.json(data)
+    })
+  },
+  deletePost: (req, res) => {
+    postService.putPost(req, res, data => {
+      return res.json(data)
+    })
   }
 }
 
