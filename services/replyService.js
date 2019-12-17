@@ -78,6 +78,19 @@ const replyService = {
 
   addBookmark: async (req, res, callback) => {
     // TODO: 新增一個書籤
+    const bookmark = await Bookmark.findOne({
+      where: {
+        PostId: req.params.id,
+        UserId: req.user.id
+      }
+    })
+    if (bookmark) {
+      return callback({
+        status: 'error',
+        message: 'bookmark already exist!',
+        PostId: req.params.id
+      })
+    }
     await Bookmark.create({
       PostId: req.params.id,
       UserId: req.user.id
@@ -89,8 +102,19 @@ const replyService = {
     })
   },
 
-  deleteBookmark: (req, res) => {
+  deleteBookmark: async (req, res, callback) => {
     // TODO: 刪除一個書籤
+    await Bookmark.destroy({
+      where: {
+        PostId: req.params.id,
+        UserId: req.user.id
+      }
+    })
+    return callback({
+      status: 'success',
+      message: '',
+      PostId: req.params.id
+    })
   }
 }
 module.exports = replyService

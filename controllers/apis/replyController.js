@@ -25,6 +25,11 @@ const replyController = {
     replyService.addBookmark(req, res, data => {
       return res.json(data)
     })
+  },
+  deleteBookmark: (req, res) => {
+    replyService.deleteBookmark(req, res, data => {
+      return res.json(data)
+    })
   }
 }
 
