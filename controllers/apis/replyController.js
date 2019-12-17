@@ -20,6 +20,11 @@ const replyController = {
     replyService.clap(req, res, data => {
       return res.json(data)
     })
+  },
+  addBookmark: (req, res) => {
+    replyService.addBookmark(req, res, data => {
+      return res.json(data)
+    })
   }
 }
 

@@ -31,7 +31,9 @@ const replyController = {
   },
 
   addBookmark: (req, res) => {
-    return res.send('POST 新增一個書籤')
+    replyService.addBookmark(req, res, data => {
+      return res.redirect('back')
+    })
   },
 
   deleteBookmark: (req, res) => {

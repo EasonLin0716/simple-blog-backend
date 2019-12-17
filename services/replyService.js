@@ -3,6 +3,7 @@ const User = db.User
 const Post = db.Post
 const Reply = db.Reply
 const Clap = db.Clap
+const Bookmark = db.Bookmark
 const helpers = require('../config/helpers')
 
 const replyService = {
@@ -73,6 +74,23 @@ const replyService = {
         })
       }
     })
+  },
+
+  addBookmark: async (req, res, callback) => {
+    // TODO: 新增一個書籤
+    await Bookmark.create({
+      PostId: req.params.id,
+      UserId: req.user.id
+    })
+    return callback({
+      status: 'success',
+      message: '',
+      PostId: req.params.id
+    })
+  },
+
+  deleteBookmark: (req, res) => {
+    // TODO: 刪除一個書籤
   }
 }
 module.exports = replyService

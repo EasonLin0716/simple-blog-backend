@@ -30,5 +30,7 @@ router.delete(
   authenticatedAdmin,
   replyController.deleteReply
 )
+router.post('/posts/:id/clap', authenticated, replyController.clap)
+router.post('/posts/:id/bookmark', authenticated, replyController.addBookmark)
 
 module.exports = router

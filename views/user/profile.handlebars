@@ -67,7 +67,11 @@
               </button>
             </form>
           {{/if}}
-          <i class="far fa-bookmark"></i>
+          <form action="/posts/{{{this.id}}}/bookmark" method="POST">
+            <button type="submit">
+              <i class="far fa-bookmark"></i>
+            </button>
+          </form>
         </div>
       </div>
     {{/each}}

@@ -53,7 +53,7 @@ router.post('/posts/:id/unclap', authenticated, replyController.unClap)
 router.get('/posts/:id/replies', replyController.getReplies)
 router.post('/posts/:id/reply', authenticated, replyController.postReply)
 router.delete('/posts/:id/replies/:reply_id', replyController.deleteReply)
-router.post('/posts/:id/bookmark', replyController.addBookmark)
+router.post('/posts/:id/bookmark', authenticated, replyController.addBookmark)
 router.delete('/posts/:id/bookmark', replyController.deleteBookmark)
 
 /* 使用者 */
