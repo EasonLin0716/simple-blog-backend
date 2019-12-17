@@ -60,6 +60,7 @@ router.delete('/posts/:id/bookmark', replyController.deleteBookmark)
 
 router.get('/users/:id', userController.getUser)
 router.get('/users/:id/edit', userController.editUser)
+router.put('/users/:id', userController.putUser)
 router.get('/users/:id/claps', userController.getClaps)
 router.get('/users/:id/highlights', userController.getHighlights)
 router.get('/users/:id/responses', userController.getResponses)

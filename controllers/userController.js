@@ -7,6 +7,7 @@ const Reply = db.Reply
 const Clap = db.Clap
 const Followship = db.Followship
 const { Op } = (sequelize = require('sequelize'))
+const userService = require('../services/userService')
 
 const userController = {
   signInPage: (req, res) => {
@@ -55,78 +56,26 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        { model: Post, include: Clap },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
-    }).then(user => {
-      user.Posts.map(post => {
-        post.monthDay = helpers.getMonthDay(String(post.createdAt))
-        post.readTime = helpers.getReadTime(post.content)
-        post.content = post.content.substring(0, 50) + `...`
-        post.clappedTime = post.Claps.map(d => d.clap).length
-          ? post.Claps.map(d => d.clap).reduce((a, b) => a + b)
-          : 0
-      })
-      if (req.user) {
-        user.isFollowing = user.Followers.map(user => user.id).includes(
-          req.user.id
-        )
-      }
-      return res.render('user/profile', {
-        user,
-        posts: user.Posts,
-        currentUser: req.user
-      })
+    userService.getUser(req, res, data => {
+      return res.render('user/profile', data)
     })
   },
 
   getClaps: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        { model: Clap, include: { model: Post, include: Clap } },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
-    }).then(user => {
-      user.clappedPost = user.Claps.map(clap => clap.Post)
-      for (let i = 0; i < user.clappedPost.length; i++) {
-        const post = user.clappedPost[i]
-        post.clappedTime = 0
-        post.Claps.map(postClap => {
-          post.clappedTime += postClap.clap
-        })
-        post.readTime = helpers.getReadTime(post.content)
-        post.monthDay = helpers.getMonthDay(String(post.createdAt))
-        post.content = post.content.substring(0, 50) + `...`
-      }
-      return res.render('user/claps', { user, currentUser: req.user })
+    userService.getClaps(req, res, data => {
+      return res.render('user/claps', data)
     })
   },
 
   getHighlights: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        { model: Post, include: Clap },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
-    }).then(user => {
-      return res.render('user/highlights', { user, currentUser: req.user })
+    userService.getHighlights(req, res, data => {
+      return res.render('user/highlights', data)
     })
   },
 
   getResponses: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        { model: Post, include: Clap },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
-    }).then(user => {
-      return res.render('user/responses', { user, currentUser: req.user })
+    userService.getResponses(req, res, data => {
+      return res.render('user/responses', data)
     })
   },
 
@@ -137,44 +86,33 @@ const userController = {
   },
 
   putUser: (req, res) => {
-    return User.findByPk(req.params.id).then(user => {
-      user
-        .update({
-          name: req.body.name,
-          introduction: req.body.introduction
-        })
-        .then(user => {
-          res.redirect(`/users/${user.id}`)
-        })
+    userService.putUser(req, res, data => {
+      return res.redirect(`/users/${data.UserId}`)
     })
   },
 
   addFollowing: (req, res) => {
-    return Followship.create({
-      followerId: req.user.id,
-      followingId: +req.params.id
-    }).then(() => {
+    userService.addFollowing(req, res, data => {
       return res.redirect('back')
     })
   },
 
   deleteFollowing: (req, res) => {
-    return Followship.destroy({
-      where: {
-        followerId: req.user.id,
-        followingId: +req.params.id
-      }
-    }).then(() => {
+    userService.deleteFollowing(req, res, data => {
       return res.redirect('back')
     })
   },
 
   getFollowings: (req, res) => {
-    return res.render('user/followings')
+    userService.getFollowings(req, res, data => {
+      return res.render('user/followings', data)
+    })
   },
 
   getFollowers: (req, res) => {
-    return res.render('user/followers')
+    userService.getFollowers(req, res, data => {
+      return res.render('user/followers', data)
+    })
   }
 }
 

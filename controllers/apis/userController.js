@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const passportJWT = require('passport-jwt')
 const ExtractJwt = passportJWT.ExtractJwt
 const JwtStrategy = passportJWT.Strategy
+const userService = require('../../services/userService')
 
 let userController = {
   signIn: (req, res) => {
@@ -64,6 +65,57 @@ let userController = {
         }
       })
     }
+  },
+  getUser: (req, res) => {
+    userService.getUser(req, res, data => {
+      return res.json(data)
+    })
+  },
+  getClaps: (req, res) => {
+    userService.getClaps(req, res, data => {
+      return res.json(data)
+    })
+  },
+  getHighlights: (req, res) => {
+    userService.getHighlights(req, res, data => {
+      return res.json(data)
+    })
+  },
+
+  getResponses: (req, res) => {
+    userService.getResponses(req, res, data => {
+      return res.json(data)
+    })
+  },
+
+  putUser: (req, res) => {
+    userService.putUser(req, res, data => {
+      return res.json(data)
+    })
+  },
+
+  addFollowing: (req, res) => {
+    userService.addFollowing(req, res, data => {
+      return res.json(data)
+    })
+  },
+
+  deleteFollowing: (req, res) => {
+    userService.deleteFollowing(req, res, data => {
+      return res.json(data)
+    })
+  },
+
+  getFollowings: (req, res) => {
+    userService.getFollowings(req, res, data => {
+      return res.json(data)
+    })
+  },
+
+  getFollowers: (req, res) => {
+    userService.getFollowers(req, res, data => {
+      return res.json(data)
+    })
   }
 }
 

@@ -41,4 +41,18 @@ router.post('/posts', authenticated, postController.addPost)
 router.put('/posts/:id', postController.putPost)
 router.delete('/posts/:id', authenticated, postController.deletePost)
 
+router.get('/users/:id', userController.getUser)
+router.get('/users/:id/claps', userController.getClaps)
+router.get('/users/:id/highlights', userController.getHighlights)
+router.get('/users/:id/responses', userController.getResponses)
+router.put('/users/:id', userController.putUser)
+router.post('/users/:id/follow', authenticated, userController.addFollowing)
+router.delete(
+  '/users/:id/follow',
+  authenticated,
+  userController.deleteFollowing
+)
+router.get('/users/:id/followers', userController.getFollowers)
+router.get('/users/:id/followings', userController.getFollowings)
+
 module.exports = router
