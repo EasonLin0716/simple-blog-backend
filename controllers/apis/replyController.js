@@ -15,6 +15,11 @@ const replyController = {
     replyService.deleteReply(req, res, data => {
       return res.json(data)
     })
+  },
+  clap: (req, res) => {
+    replyService.clap(req, res, data => {
+      return res.json(data)
+    })
   }
 }
 

@@ -21,29 +21,11 @@ const replyController = {
   },
 
   clap: (req, res) => {
-    return Clap.findOne({
-      where: { UserId: req.user.id, PostId: +req.params.id }
-    }).then(clap => {
-      if (clap) {
-        clap
-          .update({
-            clap: +(clap.clap + 1)
-          })
-          .then(() => {
-            res.redirect('back')
-          })
-      } else {
-        Clap.create({
-          clap: 1,
-          UserId: req.user.id,
-          PostId: req.params.id
-        }).then(() => {
-          res.redirect('back')
-        })
-      }
+    replyService.clap(req, res, data => {
+      return res.redirect('back')
     })
   },
-
+  // 此功能仍在評估是否要做
   unClap: (req, res) => {
     return res.send('POST 撤回一次鼓掌')
   },

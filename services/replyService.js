@@ -41,6 +41,38 @@ const replyService = {
     const reply = await Reply.findByPk(req.params.reply_id)
     await reply.destroy()
     return callback({ status: 'success', message: '', PostId: req.params.id })
+  },
+
+  clap: (req, res, callback) => {
+    return Clap.findOne({
+      where: { UserId: req.user.id, PostId: +req.params.id }
+    }).then(clap => {
+      if (clap) {
+        clap
+          .update({
+            clap: +(clap.clap + 1)
+          })
+          .then(() => {
+            return callback({
+              status: 'success',
+              message: '',
+              PostId: req.params.id
+            })
+          })
+      } else {
+        Clap.create({
+          clap: 1,
+          UserId: req.user.id,
+          PostId: req.params.id
+        }).then(() => {
+          return callback({
+            status: 'success',
+            message: '',
+            PostId: req.params.id
+          })
+        })
+      }
+    })
   }
 }
 module.exports = replyService
