@@ -12,6 +12,12 @@ const replyService = {
       where: { PostId: +req.params.id },
       include: User
     })
+    replies.map(d => {
+      d.dataValues.monthDay = helpers.getMonthDay(
+        d.dataValues.createdAt.toString()
+      )
+    })
+
     const postResult = await Post.findOne({
       where: { id: +req.params.id },
       include: [Clap, User]
