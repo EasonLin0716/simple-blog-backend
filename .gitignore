@@ -1,4 +1,5 @@
 .env
+views/
 
 .DS_Store
 *.DS_Store

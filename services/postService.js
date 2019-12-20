@@ -20,19 +20,21 @@ const postService = {
     })
     const clappedUsers = post.Claps.map(d => d.User.name)
     if (clappedUsers.length === 1) {
-      post.applauseFrom = `Applause from ${clappedUsers[0]}`
+      post.dataValues.applauseFrom = `Applause from ${clappedUsers[0]}`
     } else if (clappedUsers.length === 2) {
-      post.applauseFrom = `Applause from ${clappedUsers[0]} and ${clappedUsers[1]}`
+      post.dataValues.applauseFrom = `Applause from ${clappedUsers[0]} and ${clappedUsers[1]}`
     } else if (clappedUsers.length > 2) {
-      post.applauseFrom = `Applause from ${clappedUsers[0]}, ${
+      post.dataValues.applauseFrom = `Applause from ${clappedUsers[0]}, ${
         clappedUsers[1]
       } and ${clappedUsers.length - 2} others`
     }
     if (post.Claps.length) {
-      post.clappedTimes = post.Claps.map(d => d.clap).reduce((a, b) => a + b)
+      post.dataValues.clappedTimes = post.Claps.map(d => d.clap).reduce(
+        (a, b) => a + b
+      )
     }
-    post.monthDay = helpers.getMonthDay(String(post.createdAt))
-    post.readTime = helpers.getReadTime(post.content)
+    post.dataValues.monthDay = helpers.getMonthDay(String(post.createdAt))
+    post.dataValues.readTime = helpers.getReadTime(post.content)
 
     const author = post.User
     if (req.user) {
@@ -40,6 +42,7 @@ const postService = {
         d => d.id
       ).includes(+req.user.id)
     }
+    console.log(post)
     return callback({ post, author })
   },
 

@@ -18,10 +18,10 @@ const userService = {
       ]
     })
     user.Posts.map(post => {
-      post.monthDay = helpers.getMonthDay(String(post.createdAt))
-      post.readTime = helpers.getReadTime(post.content)
-      post.content = post.content.substring(0, 50) + `...`
-      post.clappedTime = post.Claps.map(d => d.clap).length
+      post.dataValues.monthDay = helpers.getMonthDay(String(post.createdAt))
+      post.dataValues.readTime = helpers.getReadTime(post.content)
+      post.content = post.content.substring(0, 100) + `...`
+      post.dataValues.clappedTime = post.Claps.map(d => d.clap).length
         ? post.Claps.map(d => d.clap).reduce((a, b) => a + b)
         : 0
     })
@@ -38,26 +38,42 @@ const userService = {
   },
 
   getClaps: async (req, res, callback) => {
-    const user = await User.findByPk(req.params.id, {
+    const userResult = await User.findByPk(req.params.id, {
       include: [
         { model: Clap, include: { model: Post, include: Clap } },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
     })
-    user.clappedPost = user.Claps.map(clap => clap.Post)
-    for (let i = 0; i < user.clappedPost.length; i++) {
-      const post = user.clappedPost[i]
-      post.clappedTime = 0
-      post.Claps.map(postClap => {
-        post.clappedTime += postClap.clap
-      })
-      post.readTime = helpers.getReadTime(post.content)
-      post.monthDay = helpers.getMonthDay(String(post.createdAt))
-      post.content = post.content.substring(0, 50) + `...`
+    const user = {
+      id: userResult.id,
+      name: userResult.name,
+      avatar: userResult.avatar,
+      introduction: userResult.introduction,
+      isAdmin: userResult.isAdmin,
+      createdAt: userResult.createdAt,
+      updatedAt: userResult.updatedAt,
+      followers: userResult.Followers,
+      followings: userResult.Followings
     }
+    const posts = userResult.Claps.map(d => ({
+      id: d.Post.id,
+      title: d.Post.title,
+      content: d.Post.content,
+      cover: d.Post.cover,
+      readTime: helpers.getReadTime(d.Post.content),
+      monthDay: helpers.getMonthDay(String(d.Post.createdAt)),
+      clappedTime: 0
+    }))
+    for (let i = 0; i < userResult.Claps.length; i++) {
+      userResult.Claps[i].Post.Claps.map(d => {
+        posts[i].clappedTime += d.clap
+      })
+    }
+
     return callback({
       user,
+      posts,
       currentUser: req.user
     })
   },
