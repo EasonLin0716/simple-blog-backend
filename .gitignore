@@ -1,5 +1,6 @@
 .env
 views/
+routes/routes.js
 
 .DS_Store
 *.DS_Store
