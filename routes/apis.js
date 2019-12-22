@@ -23,7 +23,7 @@ router.post('/signup', userController.signUp)
 router.get('/posts', postController.getPosts)
 router.get('/posts/:id', postController.getPost)
 router.get('/posts/:id/replies', replyController.getReplies)
-router.post('/posts/:id/reply', replyController.postReply)
+router.post('/posts/reply', replyController.postReply)
 router.delete(
   '/posts/:id/replies/:reply_id',
   authenticated,

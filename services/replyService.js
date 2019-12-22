@@ -38,8 +38,8 @@ const replyService = {
   postReply: async (req, res, callback) => {
     const reply = await Reply.create({
       content: req.body.content,
-      UserId: req.user.id,
-      PostId: req.params.id
+      UserId: req.body.id,
+      PostId: req.body.postId
     })
     return callback({ status: 'success', message: '', PostId: reply.PostId })
   },

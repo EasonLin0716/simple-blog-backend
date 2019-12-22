@@ -11,7 +11,7 @@ const replyController = {
   },
   postReply: (req, res) => {
     replyService.postReply(req, res, data => {
-      return res.redirect(`/posts/${data['PostId']}/replies`)
+      return res.redirect(`/posts/replies`)
     })
   },
   deleteReply: (req, res) => {
