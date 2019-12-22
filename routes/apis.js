@@ -37,7 +37,11 @@ router.delete(
   authenticated,
   replyController.deleteBookmark
 )
-router.post('/posts', authenticated, postController.addPost)
+router.post(
+  '/posts',
+  //authenticated,
+  postController.addPost
+)
 router.put('/posts/:id', postController.putPost)
 router.delete('/posts/:id', authenticated, postController.deletePost)
 
