@@ -20,6 +20,7 @@ const authenticatedAdmin = (req, res, next) => {
 router.get('/', (req, res) => res.redirect('/apis/posts'))
 router.post('/signin', userController.signIn)
 router.post('/signup', userController.signUp)
+router.get('/get_current_user', authenticated, userController.getCurrentUser)
 router.get('/posts', postController.getPosts)
 router.get('/posts/:id', postController.getPost)
 router.get('/posts/:id/replies', replyController.getReplies)

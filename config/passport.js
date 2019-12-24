@@ -5,6 +5,8 @@ const db = require('../models')
 const User = db.User
 const Post = db.Post
 const Reply = db.Reply
+const Clap = db.Clap
+const Bookmark = db.Bookmark
 const jwt = require('jsonwebtoken')
 const passportJWT = require('passport-jwt')
 const ExtractJwt = passportJWT.ExtractJwt
@@ -19,7 +21,9 @@ let strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
     include: [
       { model: Post, include: [Reply] },
       { model: User, as: 'Followers' },
-      { model: User, as: 'Followings' }
+      { model: User, as: 'Followings' },
+      Clap,
+      Bookmark
     ]
   }).then(user => {
     if (!user) return next(null, false)
@@ -63,7 +67,9 @@ passport.deserializeUser((id, cb) => {
     include: [
       { model: Post, include: [Reply] },
       { model: User, as: 'Followers' },
-      { model: User, as: 'Followings' }
+      { model: User, as: 'Followings' },
+      Clap,
+      Bookmark
     ]
   }).then(user => {
     return cb(null, user)

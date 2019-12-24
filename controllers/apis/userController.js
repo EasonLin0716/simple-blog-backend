@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const db = require('../../models')
-const User = db.User
+const { User, Clap, Bookmark } = db
 const jwt = require('jsonwebtoken')
 const passportJWT = require('passport-jwt')
 const ExtractJwt = passportJWT.ExtractJwt
@@ -18,7 +18,16 @@ let userController = {
     let username = req.body.email
     let password = req.body.password
 
-    User.findOne({ where: { email: username } }).then(user => {
+    User.findOne({
+      where: { email: username },
+      include: [
+        Clap,
+        Bookmark,
+        { model: Post, include: [Reply] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    }).then(user => {
       if (!user)
         return res
           .status(401)
@@ -39,7 +48,10 @@ let userController = {
           name: user.name,
           email: user.email,
           avatar: user.avatar,
-          isAdmin: user.isAdmin
+          isAdmin: user.isAdmin,
+          clappedPostId: user.Claps.map(d => d.PostId),
+          bookmarkedPostId: user.Bookmarks.map(d => d.PostId),
+          followingUserId: user.Followings.map(d => d.id)
         }
       })
     })
@@ -67,6 +79,21 @@ let userController = {
       })
     }
   },
+
+  getCurrentUser: (req, res) => {
+    console.log(req.user)
+    return res.json({
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+      avatar: req.user.avatar,
+      isAdmin: req.user.isAdmin,
+      clappedPostId: req.user.Claps.map(d => d.PostId),
+      bookmarkedPostId: req.user.Bookmarks.map(d => d.PostId),
+      followingUserId: req.user.Followings.map(d => d.id)
+    })
+  },
+
   getUser: (req, res) => {
     userService.getUser(req, res, data => {
       return res.json(data)
