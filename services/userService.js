@@ -17,6 +17,7 @@ const userService = {
         { model: User, as: 'Followings' }
       ]
     })
+    user.Posts.sort((a, b) => b.createdAt - a.createdAt)
     user.Posts.map(post => {
       post.dataValues.monthDay = helpers.getMonthDay(String(post.createdAt))
       post.dataValues.readTime = helpers.getReadTime(post.content)

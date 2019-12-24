@@ -42,7 +42,6 @@ const postService = {
         d => d.id
       ).includes(+req.user.id)
     }
-    console.log(post)
     return callback({ post, author })
   },
 
@@ -50,7 +49,8 @@ const postService = {
     const post = await Post.create({
       title: req.body.title,
       content: req.body.content,
-      UserId: req.user.id
+      UserId: req.body.UserId,
+      cover: req.body.cover
     })
     return callback({
       status: 'success',
