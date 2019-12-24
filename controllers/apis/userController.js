@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const db = require('../../models')
-const { User, Clap, Bookmark } = db
+const { User, Clap, Bookmark, Post, Reply } = db
 const jwt = require('jsonwebtoken')
 const passportJWT = require('passport-jwt')
 const ExtractJwt = passportJWT.ExtractJwt
