@@ -91,14 +91,40 @@ const userService = {
   },
 
   getResponses: async (req, res, callback) => {
-    const user = await User.findByPk(req.params.id, {
+    const userResult = await User.findByPk(req.params.id, {
       include: [
-        { model: Post, include: Clap },
+        { model: Reply, include: { model: Post, include: [Clap, Reply] } },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
     })
-    return callback({ user, currentUser: req.user })
+
+    const user = {
+      id: userResult.id,
+      name: userResult.name,
+      avatar: userResult.avatar,
+      introduction: userResult.introduction,
+      isAdmin: userResult.isAdmin,
+      createdAt: userResult.createdAt,
+      updatedAt: userResult.updatedAt,
+      followers: userResult.Followers,
+      followings: userResult.Followings
+    }
+
+    const replies = userResult.Replies.map(d => ({
+      replyContent: d.content,
+      readTime: helpers.getReadTime(d.content),
+      monthDay: helpers.getMonthDay(String(d.createdAt)),
+      postTitle: d.Post.title,
+      postClapTimes:
+        d.Post.Claps.length === 1
+          ? d.Post.Claps[0].clap
+          : d.Post.Claps.length > 1
+          ? d.Post.Claps.reduce((a, b) => a.clap + b.clap)
+          : 0
+    }))
+
+    return callback({ replies, user, currentUser: req.user })
   },
 
   getFollowings: async (req, res, callback) => {
