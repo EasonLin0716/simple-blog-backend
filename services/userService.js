@@ -121,7 +121,8 @@ const userService = {
           ? d.Post.Claps[0].clap
           : d.Post.Claps.length > 1
           ? d.Post.Claps.reduce((a, b) => a.clap + b.clap)
-          : 0
+          : 0,
+      postReplyTimes: d.Post.Replies.length
     }))
 
     return callback({ replies, user, currentUser: req.user })

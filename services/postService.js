@@ -60,7 +60,15 @@ const postService = {
   },
 
   putPost: async (req, res, callback) => {
+    console.log(req.body)
     const post = await Post.findByPk(req.params.id)
+    if (+req.params.id !== req.user.id) {
+      return callback({
+        status: 'error',
+        message: 'can not edit because you are not author!!',
+        PostId: post.id
+      })
+    }
     await post.update({
       title: req.body.title,
       content: req.body.content

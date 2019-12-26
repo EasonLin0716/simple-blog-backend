@@ -4,6 +4,8 @@ const path = require('path')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const multer = require('multer')
+const upload = multer()
 
 const flash = require('connect-flash')
 const session = require('express-session')
