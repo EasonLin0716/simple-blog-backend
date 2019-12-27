@@ -51,7 +51,8 @@ let userController = {
           isAdmin: user.isAdmin,
           clappedPostId: user.Claps.map(d => d.PostId),
           bookmarkedPostId: user.Bookmarks.map(d => d.PostId),
-          followingUserId: user.Followings.map(d => d.id)
+          followingUserId: user.Followings.map(d => d.id),
+          followerUserId: user.Followers.map(d => d.id)
         }
       })
     })
@@ -81,6 +82,7 @@ let userController = {
   },
 
   getCurrentUser: (req, res) => {
+    console.log(req.user)
     return res.json({
       id: req.user.id,
       name: req.user.name,
@@ -89,7 +91,8 @@ let userController = {
       isAdmin: req.user.isAdmin,
       clappedPostId: req.user.Claps.map(d => d.PostId),
       bookmarkedPostId: req.user.Bookmarks.map(d => d.PostId),
-      followingUserId: req.user.Followings.map(d => d.id)
+      followingUserId: req.user.Followings.map(d => d.id),
+      followerUserId: user.Followers.map(d => d.id)
     })
   },
 
