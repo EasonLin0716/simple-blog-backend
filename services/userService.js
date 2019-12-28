@@ -136,7 +136,9 @@ const userService = {
         { model: User, as: 'Followings' }
       ]
     })
-    return callback({ user, currentUser: req.user })
+    const followings = user.Followings
+
+    return callback({ followings })
   },
 
   getFollowers: async (req, res, callback) => {
@@ -147,7 +149,9 @@ const userService = {
         { model: User, as: 'Followings' }
       ]
     })
-    return callback({ user, currentUser: req.user })
+    const followers = user.Followers
+
+    return callback({ followers })
   },
 
   putUser: async (req, res, callback) => {
