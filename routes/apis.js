@@ -54,7 +54,7 @@ router.get('/users/:id', userController.getUser)
 router.get('/users/:id/claps', userController.getClaps)
 router.get('/users/:id/highlights', userController.getHighlights)
 router.get('/users/:id/responses', userController.getResponses)
-router.put('/users/:id', userController.putUser)
+router.put('/users/edit', authenticated, upload.array(), userController.putUser)
 router.post('/users/:id/follow', authenticated, userController.addFollowing)
 router.delete(
   '/users/:id/follow',

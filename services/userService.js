@@ -155,7 +155,13 @@ const userService = {
   },
 
   putUser: async (req, res, callback) => {
-    const user = await User.findByPk(req.params.id)
+    if (!req.body.name || !req.body.introduction) {
+      return callback({
+        status: 'error',
+        message: 'every column must be input'
+      })
+    }
+    const user = await User.findByPk(req.user.id)
     await user.update({
       name: req.body.name,
       introduction: req.body.introduction
