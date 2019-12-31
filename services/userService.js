@@ -1,4 +1,3 @@
-const bcrypt = require('bcryptjs')
 const helpers = require('../config/helpers')
 const db = require('../models')
 const User = db.User
@@ -6,7 +5,8 @@ const Post = db.Post
 const Reply = db.Reply
 const Clap = db.Clap
 const Followship = db.Followship
-const { Op } = (sequelize = require('sequelize'))
+const fs = require('fs')
+const imgur = require('imgur-node-api')
 
 const userService = {
   getUser: async (req, res, callback) => {
@@ -161,14 +161,30 @@ const userService = {
         message: 'every column must be input'
       })
     }
+    const { file } = req
     const user = await User.findByPk(req.user.id)
+    if (file) {
+      imgur.setClientID(process.env.IMGUR_CLIENT_ID)
+      imgur.upload(file.path, async (err, img) => {
+        await user.update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+          avatar: file ? img.data.link : null
+        })
+      })
+      return callback({
+        status: 'success',
+        message: 'user edit and image upload successful.',
+        UserId: user.id
+      })
+    }
     await user.update({
       name: req.body.name,
       introduction: req.body.introduction
     })
     return callback({
       status: 'success',
-      message: '',
+      message: 'user edit successful.',
       UserId: user.id
     })
   },

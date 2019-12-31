@@ -5,7 +5,7 @@ const postController = require('../controllers/apis/postController')
 const replyController = require('../controllers/apis/replyController')
 const userController = require('../controllers/apis/userController')
 const multer = require('multer')
-const upload = multer()
+const upload = multer({ dest: 'temp/' })
 
 const authenticated = passport.authenticate('jwt', { session: false })
 const authenticatedAdmin = (req, res, next) => {
@@ -24,7 +24,7 @@ router.post('/signin', userController.signIn)
 router.post('/signup', upload.array(), userController.signUp)
 router.get('/get_current_user', authenticated, userController.getCurrentUser)
 router.get('/posts', postController.getPosts)
-// router.get('/posts/:id/edit', authenticated, postController.editPost)
+
 router.put('/posts/:id', authenticated, upload.array(), postController.putPost)
 router.get('/posts/:id', postController.getPost)
 router.get('/posts/:id/replies', replyController.getReplies)
@@ -54,7 +54,12 @@ router.get('/users/:id', userController.getUser)
 router.get('/users/:id/claps', userController.getClaps)
 router.get('/users/:id/highlights', userController.getHighlights)
 router.get('/users/:id/responses', userController.getResponses)
-router.put('/users/edit', authenticated, upload.array(), userController.putUser)
+router.put(
+  '/users/edit',
+  authenticated,
+  upload.single('image'),
+  userController.putUser
+)
 router.post('/users/:id/follow', authenticated, userController.addFollowing)
 router.delete(
   '/users/:id/follow',
