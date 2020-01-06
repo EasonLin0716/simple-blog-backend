@@ -10,7 +10,7 @@ const upload = multer()
 const flash = require('connect-flash')
 const session = require('express-session')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 const cors = require('cors')
 
 if (process.env.NODE_ENV !== 'production') {
