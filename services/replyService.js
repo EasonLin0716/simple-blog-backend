@@ -57,7 +57,7 @@ const replyService = {
       if (clap) {
         clap
           .update({
-            clap: +(clap.clap + 1)
+            clap: Number(clap.clap) + Number(req.body.clapCount)
           })
           .then(() => {
             return callback({
@@ -68,7 +68,7 @@ const replyService = {
           })
       } else {
         Clap.create({
-          clap: 1,
+          clap: req.body.clapCount,
           UserId: req.user.id,
           PostId: req.params.id
         }).then(() => {
@@ -109,7 +109,6 @@ const replyService = {
   },
 
   deleteBookmark: async (req, res, callback) => {
-    // TODO: 刪除一個書籤
     await Bookmark.destroy({
       where: {
         PostId: req.params.id,

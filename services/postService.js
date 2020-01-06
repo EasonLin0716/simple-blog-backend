@@ -32,6 +32,8 @@ const postService = {
       post.dataValues.clappedTimes = post.Claps.map(d => d.clap).reduce(
         (a, b) => a + b
       )
+    } else {
+      post.dataValues.clappedTimes = 0
     }
     post.dataValues.monthDay = helpers.getMonthDay(String(post.createdAt))
     post.dataValues.readTime = helpers.getReadTime(post.content)
