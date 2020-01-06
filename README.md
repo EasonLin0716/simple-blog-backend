@@ -1,6 +1,14 @@
 # simple-blog-backend
 
-專案 simple-blog 使用的後端伺服器。
+專案 simple-blog 使用的後端伺服器。此專案仍處於開發階段，部分功能上無法使用
+
+[本專案已佈署於 heroku](https://simple-blog-backend.herokuapp.com/api/)
+
+關於現階段的成品，可參考前端的[github page](https://easonlin0716.github.io/simple-blog-frontend/#/users/1)
+
+## API 文件
+
+正在撰寫中
 
 ## 安裝
 
