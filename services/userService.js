@@ -22,6 +22,7 @@ const userService = {
       post.dataValues.monthDay = helpers.getMonthDay(String(post.createdAt))
       post.dataValues.readTime = helpers.getReadTime(post.content)
       post.content = post.content.substring(0, 100) + `...`
+      post.dataValues.clapping = 0
       post.dataValues.clappedTime = post.Claps.map(d => d.clap).length
         ? post.Claps.map(d => d.clap).reduce((a, b) => a + b)
         : 0
