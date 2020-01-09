@@ -4,10 +4,24 @@ const Post = db.Post
 const Reply = db.Reply
 const Clap = db.Clap
 const helpers = require('../config/helpers')
+const Sequelize = require('sequelize')
 
 const postService = {
   getPosts: async (req, res, callback) => {
-    const posts = await Post.findAll()
+    const postsResult = await Post.findAll({
+      order: Sequelize.literal('rand()'),
+      include: User
+    })
+    const posts = postsResult.map(d => ({
+      id: d.id,
+      title: d.title,
+      content: d.content,
+      cover: d.cover,
+      readTime: helpers.getReadTime(d.content),
+      monthDay: helpers.getMonthDay(String(d.createdAt)),
+      authorId: d.User.id,
+      author: d.User.name
+    }))
     return callback({ posts })
   },
 
