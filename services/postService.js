@@ -22,7 +22,45 @@ const postService = {
       authorId: d.User.id,
       author: d.User.name
     }))
-    return callback({ posts })
+
+    const newPostsResult = await Post.findAll({
+      limit: 4,
+      order: [['createdAt', 'DESC']],
+      include: User
+    })
+    const newPosts = newPostsResult.map(d => ({
+      id: d.id,
+      title: d.title,
+      content: d.content,
+      cover: d.cover,
+      readTime: helpers.getReadTime(d.content),
+      monthDay: helpers.getMonthDay(String(d.createdAt)),
+      authorId: d.User.id,
+      author: d.User.name
+    }))
+
+    const popularPostsResult = await Post.findAll({
+      include: [Clap, User]
+    })
+    let popularPosts = popularPostsResult.map(d => ({
+      id: d.id,
+      title: d.title,
+      content: d.content,
+      cover: d.cover,
+      claps:
+        d.Claps.length === 0
+          ? 0
+          : d.Claps.length === 1
+          ? d.Claps[0].clap
+          : d.Claps.reduce((a, b) => a.clap + b.clap),
+      readTime: helpers.getReadTime(d.content),
+      monthDay: helpers.getMonthDay(String(d.createdAt)),
+      authorId: d.User.id,
+      author: d.User.name
+    }))
+    popularPosts = popularPosts.sort((a, b) => b.claps - a.claps).slice(0, 4)
+
+    return callback({ posts, newPosts, popularPosts })
   },
 
   getPost: async (req, res, callback) => {
