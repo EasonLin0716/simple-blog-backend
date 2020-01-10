@@ -4,7 +4,7 @@
 
 [本專案已佈署於 heroku](https://simple-blog-backend.herokuapp.com/api/)
 
-關於現階段的成品，可參考前端的[github page](https://easonlin0716.github.io/simple-blog-frontend/#/users/1)
+關於現階段的成品，可參考前端的[github page](https://easonlin0716.github.io/simple-blog-frontend/#/posts)
 
 ## API 文件
 
