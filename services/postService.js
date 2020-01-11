@@ -3,6 +3,7 @@ const User = db.User
 const Post = db.Post
 const Reply = db.Reply
 const Clap = db.Clap
+const Bookmark = db.Bookmark
 const helpers = require('../config/helpers')
 const Sequelize = require('sequelize')
 
@@ -10,7 +11,7 @@ const postService = {
   getPosts: async (req, res, callback) => {
     const postsResult = await Post.findAll({
       order: Sequelize.literal('rand()'),
-      include: User
+      include: [User, { model: Bookmark, required: false }]
     })
     const posts = postsResult.map(d => ({
       id: d.id,
@@ -20,7 +21,8 @@ const postService = {
       readTime: helpers.getReadTime(d.content),
       monthDay: helpers.getMonthDay(String(d.createdAt)),
       authorId: d.User.id,
-      author: d.User.name
+      author: d.User.name,
+      bookmarkId: d.Bookmarks.map(d => d.UserId)
     }))
 
     const newPostsResult = await Post.findAll({
@@ -36,6 +38,7 @@ const postService = {
       readTime: helpers.getReadTime(d.content),
       monthDay: helpers.getMonthDay(String(d.createdAt)),
       authorId: d.User.id,
+      authorAvatar: d.User.avatar,
       author: d.User.name
     }))
 
