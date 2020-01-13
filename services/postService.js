@@ -117,9 +117,11 @@ const postService = {
   },
 
   putPost: async (req, res, callback) => {
+    console.log('****')
     console.log(req.body)
+    console.log('****')
     const post = await Post.findByPk(req.params.id)
-    if (+req.params.id !== req.user.id) {
+    if (+req.body.userId !== req.user.id) {
       return callback({
         status: 'error',
         message: 'can not edit because you are not author!!',
