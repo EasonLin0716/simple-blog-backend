@@ -1,14 +1,36 @@
 const helpers = require('../config/helpers')
 const db = require('../models')
-const User = db.User
-const Post = db.Post
-const Reply = db.Reply
-const Clap = db.Clap
-const Followship = db.Followship
+const { User, Post, Reply, Clap, Followship } = db
 const fs = require('fs')
 const imgur = require('imgur-node-api')
+const htmlToText = require('html-to-text')
 
 const userService = {
+  getStories: async (req, res, callback) => {
+    const postsResult = await Post.findAll({
+      where: {
+        UserId: req.user.id
+      },
+      order: [['createdAt', 'DESC']]
+    })
+
+    const posts = postsResult.map(d => ({
+      id: d.id,
+      title: d.title,
+      content:
+        htmlToText
+          .fromString(d.content)
+          .substring(0, 100)
+          .replace(/\n/g, ' ') + '...',
+      monthDay: helpers.getMonthDay(String(d.createdAt)),
+      readTime: helpers.getReadTime(d.content)
+    }))
+
+    return callback({
+      posts
+    })
+  },
+
   getUser: async (req, res, callback) => {
     const user = await User.findByPk(req.params.id, {
       include: [

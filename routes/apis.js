@@ -50,6 +50,7 @@ router.post(
 router.put('/posts/:id', postController.putPost)
 router.delete('/posts/:id', authenticated, postController.deletePost)
 
+router.get('/users/stories', authenticated, userController.getStories)
 router.get('/users/:id', userController.getUser)
 router.get('/users/:id/claps', userController.getClaps)
 router.get('/users/:id/highlights', userController.getHighlights)

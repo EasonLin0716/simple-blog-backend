@@ -81,6 +81,12 @@ let userController = {
     }
   },
 
+  getStories: (req, res) => {
+    userService.getStories(req, res, data => {
+      return res.json(data)
+    })
+  },
+
   getCurrentUser: (req, res) => {
     return res.json({
       id: req.user.id,

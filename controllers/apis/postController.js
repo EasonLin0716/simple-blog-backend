@@ -23,7 +23,7 @@ const postController = {
     })
   },
   deletePost: (req, res) => {
-    postService.putPost(req, res, data => {
+    postService.deletePost(req, res, data => {
       return res.json(data)
     })
   }
