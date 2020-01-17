@@ -45,6 +45,7 @@ router.delete(
 router.post(
   '/posts',
   //authenticated,
+  upload.array('image'),
   postController.addPost
 )
 router.put('/posts/:id', postController.putPost)

@@ -6,6 +6,8 @@ const Clap = db.Clap
 const Bookmark = db.Bookmark
 const helpers = require('../config/helpers')
 const Sequelize = require('sequelize')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const postService = {
   getPosts: async (req, res, callback) => {
@@ -107,8 +109,24 @@ const postService = {
       title: req.body.title ? req.body.title : 'untitled',
       content: req.body.content ? req.body.content : 'no contents',
       UserId: req.body.UserId,
-      cover: req.body.cover ? req.body.cover : 'https://fakeimg.pl/640x480/'
+      cover: 'https://fakeimg.pl/640x480/'
     })
+    const { files } = req
+    if (files.length) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(files[0].path, async (err, img) => {
+        await post.update({
+          cover: img.data.link
+        })
+
+        return callback({
+          status: 'success',
+          message: '',
+          PostId: post.id
+        })
+      })
+    }
+
     return callback({
       status: 'success',
       message: '',

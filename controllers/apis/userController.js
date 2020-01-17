@@ -10,7 +10,7 @@ const userService = require('../../services/userService')
 let userController = {
   signIn: (req, res) => {
     if (!req.body.email || !req.body.password) {
-      return res.json({
+      return res.status(400).json({
         status: 'error',
         message: "required fields didn't exist"
       })
@@ -39,7 +39,7 @@ let userController = {
       }
       const payload = { id: user.id }
       const token = jwt.sign(payload, process.env.JWT_SECRET)
-      return res.json({
+      return res.status(200).json({
         status: 'success',
         message: 'ok',
         token: token,
