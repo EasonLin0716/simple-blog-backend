@@ -114,18 +114,26 @@ const postService = {
     const { files } = req
     if (files.length) {
       imgur.setClientID(IMGUR_CLIENT_ID)
-      imgur.upload(files[0].path, async (err, img) => {
-        await post.update({
-          cover: img.data.link
-        })
+      imgur.upload(files[0].path, function(err, img) {
+        post
+          .update({
+            cover: img.data.link
+          })
+          .then(() => {
+            return callback({
+              status: 'success',
+              message: '',
+              PostId: post.id
+            })
+          })
+      })
+    } else {
+      return callback({
+        status: 'success',
+        message: '',
+        PostId: post.id
       })
     }
-
-    return callback({
-      status: 'success',
-      message: '',
-      PostId: post.id
-    })
   },
 
   putPost: async (req, res, callback) => {
