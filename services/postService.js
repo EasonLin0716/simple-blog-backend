@@ -104,10 +104,10 @@ const postService = {
 
   addPost: async (req, res, callback) => {
     const post = await Post.create({
-      title: req.body.title,
-      content: req.body.content,
+      title: req.body.title ? req.body.title : 'untitled',
+      content: req.body.content ? req.body.content : 'no contents',
       UserId: req.body.UserId,
-      cover: req.body.cover
+      cover: req.body.cover ? req.body.cover : 'https://fakeimg.pl/640x480/'
     })
     return callback({
       status: 'success',
@@ -129,8 +129,8 @@ const postService = {
       })
     }
     await post.update({
-      title: req.body.title,
-      content: req.body.content
+      title: req.body.title ? req.body.title : 'untitled',
+      content: req.body.content ? req.body.content : 'no contents'
     })
     return callback({
       status: 'success',
