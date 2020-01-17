@@ -118,12 +118,6 @@ const postService = {
         await post.update({
           cover: img.data.link
         })
-
-        return callback({
-          status: 'success',
-          message: '',
-          PostId: post.id
-        })
       })
     }
 
