@@ -137,9 +137,6 @@ const postService = {
   },
 
   putPost: async (req, res, callback) => {
-    console.log('****')
-    console.log(req.body)
-    console.log('****')
     const post = await Post.findByPk(req.params.id)
     if (+req.body.userId !== req.user.id) {
       return callback({
@@ -152,11 +149,29 @@ const postService = {
       title: req.body.title ? req.body.title : 'untitled',
       content: req.body.content ? req.body.content : 'no contents'
     })
-    return callback({
-      status: 'success',
-      message: '',
-      PostId: post.id
-    })
+    const { files } = req
+    if (files.length) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(files[0].path, function(err, img) {
+        post
+          .update({
+            cover: img.data.link
+          })
+          .then(() => {
+            return callback({
+              status: 'success',
+              message: '',
+              PostId: post.id
+            })
+          })
+      })
+    } else {
+      return callback({
+        status: 'success',
+        message: '',
+        PostId: post.id
+      })
+    }
   },
 
   deletePost: async (req, res, callback) => {

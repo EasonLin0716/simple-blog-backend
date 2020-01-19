@@ -25,7 +25,12 @@ router.post('/signup', upload.array(), userController.signUp)
 router.get('/get_current_user', authenticated, userController.getCurrentUser)
 router.get('/posts', postController.getPosts)
 
-router.put('/posts/:id', authenticated, upload.array(), postController.putPost)
+router.put(
+  '/posts/:id',
+  authenticated,
+  upload.array('image'),
+  postController.putPost
+)
 router.get('/posts/:id', postController.getPost)
 router.get('/posts/:id/replies', replyController.getReplies)
 router.post('/posts/reply', replyController.postReply)
@@ -48,7 +53,6 @@ router.post(
   upload.array('image'),
   postController.addPost
 )
-router.put('/posts/:id', postController.putPost)
 router.delete('/posts/:id', authenticated, postController.deletePost)
 
 router.get('/users/stories', authenticated, userController.getStories)
