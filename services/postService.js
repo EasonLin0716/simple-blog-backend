@@ -6,8 +6,10 @@ const Clap = db.Clap
 const Bookmark = db.Bookmark
 const helpers = require('../config/helpers')
 const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const htmlToText = require('html-to-text')
 
 const postService = {
   getPosts: async (req, res, callback) => {
@@ -185,6 +187,37 @@ const postService = {
       status: 'success',
       message: '',
       UserId: req.user.id
+    })
+  },
+
+  searchPost: async (req, res, callback) => {
+    const searchText = req.query.q
+    if (!searchText) {
+      return callback({ status: 'error', message: 'must input search text' })
+    }
+    const postsResult = await Post.findAll({
+      where: { title: { [Op.like]: `%${searchText}%` } },
+      include: User
+    })
+    const posts = postsResult.map(d => ({
+      id: d.id,
+      title: d.title,
+      content:
+        htmlToText
+          .fromString(d.content)
+          .substring(0, 100)
+          .replace(/\n/g, ' ') + '...',
+      cover: d.cover,
+      readTime: helpers.getReadTime(d.content),
+      monthDay: helpers.getMonthDay(String(d.createdAt)),
+      authorId: d.User.id,
+      authorAvatar: d.User.avatar,
+      author: d.User.name
+    }))
+
+    return callback({
+      posts,
+      searchText
     })
   }
 }

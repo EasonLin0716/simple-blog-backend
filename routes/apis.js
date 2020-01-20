@@ -24,7 +24,7 @@ router.post('/signin', userController.signIn)
 router.post('/signup', upload.array(), userController.signUp)
 router.get('/get_current_user', authenticated, userController.getCurrentUser)
 router.get('/posts', postController.getPosts)
-
+router.get('/search', postController.searchPost)
 router.put(
   '/posts/:id',
   authenticated,

@@ -26,6 +26,11 @@ const postController = {
     postService.deletePost(req, res, data => {
       return res.json(data)
     })
+  },
+  searchPost: (req, res) => {
+    postService.searchPost(req, res, data => {
+      return res.json(data)
+    })
   }
 }
 
