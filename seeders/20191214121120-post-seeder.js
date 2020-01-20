@@ -8,7 +8,9 @@ module.exports = {
         id: index + 1,
         title: faker.lorem.words(),
         content: faker.lorem.paragraphs(),
-        cover: 'https://fakeimg.pl/640x480/',
+        cover: `https://i.picsum.photos/id/${Math.floor(
+          Math.random() * 200
+        )}/640/480.jpg`,
         userId: (index % 3) + 1,
         createdAt: new Date(),
         updatedAt: new Date()
