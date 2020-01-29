@@ -2,6 +2,7 @@
 views/
 routes/routes.js
 temp/
+scss/
 
 .DS_Store
 *.DS_Store
