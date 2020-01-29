@@ -1,14 +1,21 @@
 # simple-blog-backend
 
-專案 simple-blog 使用的後端伺服器。此專案仍處於開發階段，部分功能上無法使用
+使用 Vue.js 作為前端開發框架，參考 Medium 所撰寫的部落格前後端分離專案，此為後端伺服器專案。這是一個基於練習全端開發、興趣同時也想致敬原網站而做的作品，本身不做任何商業用途。
+
+![Cover1](https://github.com/EasonLin0716/simple-blog-frontend/blob/master/src/assets/cover1.JPG)
+
+![Cover2](https://github.com/EasonLin0716/simple-blog-frontend/blob/master/src/assets/cover2.JPG)
+
+![Cover3](https://github.com/EasonLin0716/simple-blog-frontend/blob/master/src/assets/cover3.JPG)
 
 [本專案已佈署於 heroku](https://simple-blog-backend.herokuapp.com/api/)
 
 關於現階段的成品，可參考前端的[github page](https://easonlin0716.github.io/simple-blog-frontend/#/posts)
 
-## API 文件
+## 使用工具
 
-正在撰寫中
+- Node.js Express
+- MySQL (with Sequelize ORM)
 
 ## 安裝
 
