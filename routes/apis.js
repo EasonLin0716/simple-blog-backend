@@ -19,7 +19,9 @@ const authenticatedAdmin = (req, res, next) => {
   }
 }
 
-router.get('/', (req, res) => res.redirect('/api/posts'))
+router.get('/', (req, res) =>
+  res.json({ status: 'success', message: 'welcome to simple-blog!!' })
+)
 router.post('/signin', userController.signIn)
 router.post('/signup', upload.array(), userController.signUp)
 router.get('/get_current_user', authenticated, userController.getCurrentUser)
