@@ -7,24 +7,23 @@ const htmlToText = require('html-to-text')
 
 const userService = {
   getStories: async (req, res, callback) => {
-    const postsResult = await Post.findAll({
+    const posts = await Post.findAll({
+      attributes: ['id', 'title', 'content', 'createdAt'],
       where: {
         UserId: req.user.id
       },
       order: [['createdAt', 'DESC']]
     })
 
-    const posts = postsResult.map(d => ({
-      id: d.id,
-      title: d.title,
-      content:
+    posts.map(d => {
+      d.content =
         htmlToText
           .fromString(d.content)
           .substring(0, 100)
-          .replace(/\n/g, ' ') + '...',
-      monthDay: helpers.getMonthDay(String(d.createdAt)),
-      readTime: helpers.getReadTime(d.content)
-    }))
+          .replace(/\n/g, ' ') + '...'
+      d.monthDay = helpers.getMonthDay(String(d.createdAt))
+      d.dataValues.readTime = helpers.getReadTime(d.content)
+    })
 
     return callback({
       posts
