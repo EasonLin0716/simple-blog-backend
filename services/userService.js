@@ -152,28 +152,42 @@ const userService = {
 
   getFollowings: async (req, res, callback) => {
     const user = await User.findByPk(req.params.id, {
+      attributes: ['id', 'name', 'avatar', 'introduction'],
       include: [
-        { model: Post, include: Clap },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
+        {
+          model: User,
+          as: 'Followings',
+          attributes: ['id', 'name', 'avatar', 'introduction']
+        },
+        {
+          model: User,
+          as: 'Followers',
+          attributes: ['id', 'name', 'avatar', 'introduction']
+        }
       ]
     })
-    const followings = user.Followings
 
-    return callback({ followings })
+    return callback({ user })
   },
 
   getFollowers: async (req, res, callback) => {
     const user = await User.findByPk(req.params.id, {
+      attributes: ['id', 'name', 'avatar', 'introduction'],
       include: [
-        { model: Post, include: Clap },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
+        {
+          model: User,
+          as: 'Followings',
+          attributes: ['id', 'name', 'avatar', 'introduction']
+        },
+        {
+          model: User,
+          as: 'Followers',
+          attributes: ['id', 'name', 'avatar', 'introduction']
+        }
       ]
     })
-    const followers = user.Followers
 
-    return callback({ followers })
+    return callback({ user })
   },
 
   putUser: async (req, res, callback) => {
