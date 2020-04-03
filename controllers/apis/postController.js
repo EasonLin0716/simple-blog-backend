@@ -31,6 +31,11 @@ const postController = {
     postService.searchPost(req, res, data => {
       return res.json(data)
     })
+  },
+  postImage: (req, res) => {
+    postService.postImage(req, res, data => {
+      return res.json(data)
+    })
   }
 }
 

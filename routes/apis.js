@@ -56,6 +56,7 @@ router.post(
   postController.addPost
 )
 router.delete('/posts/:id', authenticated, postController.deletePost)
+router.post('/imageUpload', postController.postImage)
 
 router.get('/users/stories', authenticated, userController.getStories)
 router.get('/users/:id', userController.getUser)

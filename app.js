@@ -44,6 +44,7 @@ const destPath = __dirname + '/public'
 // )
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json({ limit: '2100000kb' }))
 app.use(bodyParser.json())
 app.use(methodOverride('_method'))
 app.use(flash())

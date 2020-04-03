@@ -43,3 +43,7 @@ IMGUR_CLIENT_ID=IMGUR金鑰
 ```
 node app.js
 ```
+
+## 等待排除的問題
+
+- 合併 imgur api

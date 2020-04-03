@@ -11,6 +11,9 @@ const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const htmlToText = require('html-to-text')
 
+const imgurAPI = require('imgur')
+imgurAPI.setClientId(process.env.IMGUR_CLIENT_ID)
+
 const postService = {
   getPosts: async (req, res, callback) => {
     const postsResult = await Post.findAll({
@@ -219,6 +222,23 @@ const postService = {
       posts,
       searchText
     })
+  },
+
+  postImage: async (req, res, callback) => {
+    const imageBase64 = req.body.imageBase64
+    imgurAPI
+      .uploadBase64(imageBase64)
+      .then(function(json) {
+        console.log(json.data.link)
+        req.body.imageBase64 = ''
+        return callback({
+          status: 'success',
+          imgurLink: json.data.link
+        })
+      })
+      .catch(function(err) {
+        console.error(err.message)
+      })
   }
 }
 
